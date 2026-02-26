@@ -1,17 +1,64 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>BusyBeeRails</title>
+    <title>Busy Bee</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
-
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
-
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
+  <body class="bg-[url('/assets/background.jpg')] bg-center bg-cover bg-fixed text-white min-h-screen">
+    <header class="border-b">
+      <nav
+        class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16"
+      >
+        <div class="flex items-center gap-2">
+          <%= link_to root_path, class: "flex items-center gap-2" do %>
+            <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-teal-500 font-bold">
+              B
+            </span>
+            <span class="font-semibold tracking-tight">
+              Busy Bee
+            </span>
+          <% end %>
+        </div>
+        <!-- Desktop nav -->
+        <div class="hidden sm:flex items-center gap-4 text-sm">
+          <%= link_to "Home", root_path, class: "hover:text-indigo-600" %>
+          <%= link_to "Jobs", jobs_path, class: "hover:text-indigo-600" rescue nil %>
+          <%= link_to "Developers", developers_path, class: "hover:text-indigo-600" rescue nil %>
+        </div>
+        <!-- Mobile menu placeholder (can wire Stimulus later) -->
+        <button
+          type="button"
+          class="sm:hidden inline-flex items-center justify-center rounded-md border border-slate-300 p-2 text-slate-700 hover:bg-slate-100"
+        >
+          <span class="sr-only">Open menu</span>
+          ☰
+        </button>
+      </nav>
+    </header>
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <% if notice %>
+        <div class="mb-4 rounded-md border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm text-emerald-800">
+          <%= notice %>
+        </div>
+      <% end %>
+      <% if alert %>
+        <div class="mb-4 rounded-md border border-rose-200 bg-rose-50 px-4 py-2 text-sm text-rose-800">
+          <%= alert %>
+        </div>
+      <% end %>
       <%= yield %>
     </main>
+    <footer class="mt-8 border-t">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 text-xs flex justify-between">
+        <span>&copy; <%= Time.current.year %> Busy Bee</span>
+        <span>Built with Ruby on Rails & Tailwind CSS</span>
+      </div>
+    </footer>
   </body>
+</html>
 </html>
