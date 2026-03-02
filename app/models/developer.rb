@@ -1,8 +1,8 @@
 class Developer < ApplicationRecord
-  has_secure_password
-
   has_many :jobs
   has_many :feedbacks
+
+  belongs_to :user
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
