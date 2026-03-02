@@ -18,6 +18,17 @@ I choose to follow the best practice of doing the documentation and planning at 
 
 ### What I Learned
 
+- The "rails new xxx" command automatically init a Git repository by default
+- TailwindCSS use JS bundler to precompile the CSS
+- Puma boot fast enough to make Spring obsolete
+- Gems removed from Ruby standard library required an explicit installation by adding in Ruby Gemfile
+- Multiple gem version might create conflict during bundling which need a version lock
+- Several auto created configs might caused issues
+- Tailwind v4 above simplified tailwind import into "tailwindcss"
+- Rails DB auto generate id unlike sql file where id need to be specified when created a table
+- Set a column as FK automatically indexed it
+- Model must refer to db schema to properly create and validate data
+
 ### Unsolved Problems
 
 ### To-Do-List
@@ -30,7 +41,10 @@ I choose to follow the best practice of doing the documentation and planning at 
 ### Deployment
 
 1. Run "Bundle Install"
-2. run "bin/rails db:create" and "bin/rails db:migrate"
+2. Run Postgresql
+3. Run "bin/rails db:create" and "bin/rails db:migrate" to create database
+4. Run "bin/dev" to start Rails server with Tailwind and JS bundler
+5. Go to <http://localhost:3000> in browser
 
 [visit page](https://github.com/lfonz9364/busy-bee-rails)
 ![alt tag]()
