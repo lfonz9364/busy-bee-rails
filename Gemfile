@@ -12,8 +12,6 @@ gem 'rails', '~> 7.1'
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
@@ -33,6 +31,8 @@ gem 'jbuilder', '~> 2.5'
 gem 'bcrypt', '~> 3.1.7'
 # Use Tailwind CSS for styling
 gem 'tailwindcss-rails'
+# Allow asset precompilation to work 
+gem "sprockets-rails"
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
