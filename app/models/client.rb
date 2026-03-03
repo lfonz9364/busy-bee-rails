@@ -8,8 +8,8 @@ class Client < ApplicationRecord
   has_many :authored_feedbacks, 
            -> { where(role: 'client') },
            class_name: 'Feedback', 
-           foreign_key: 'author_id', 
-           primary_key: 'user_id'
+           foreign_key: :user_id, 
+           primary_key: :user_id
 
   # Delegate user attributes to avoid redundant calls (e.g., client.name instead of client.user.name)
   delegate :name,

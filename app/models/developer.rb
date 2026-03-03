@@ -5,7 +5,7 @@ class Developer < ApplicationRecord
   has_many :jobs, dependent: :nullify
 
   # Feedbacks this developer has received from clients
-  has_many :feedbacks,
+  has_many :received_feedbacks,
            -> { where(role:'client')}, # only client-written reviews 
            through: :jobs, 
            source: :feedbacks

@@ -7,4 +7,68 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  def create_user(overrides = {})
+    defaults = {
+      name: "Test User",
+      email: "user#{SecureRandom.hex(4)}@example.com",
+      address: "123 Test St",
+      suburb: "Testville",
+      postcode: 3000,
+      country: "Australia",
+      contact_person: "Tester",
+      abn: "12345678901",
+      password: "password123",
+      password_confirmation: "password123"
+    }
+
+    User.create!(defaults.merge(overrides))
+  end
+
+  def create_client(overrides = {})
+    user_overrides = {
+      name: "Test Client",
+      email: "client#{SecureRandom.hex(4)}@example.com",
+      contact_person: "Client Contact"
+    }
+    user = overrides.delete(:user) || create_user(user_overrides)
+    Client.create!({ user: user }.merge(overrides))
+  end
+
+  def create_developer(overrides = {})
+    user_overrides = {
+      name: "Test Developer",
+      email: "developer#{SecureRandom.hex(4)}@example.com",
+      contact_person: "Developer Contact"
+    }
+    user = overrides.delete(:user) || create_user(user_overrides)
+    Developer.create!({ user: user, skillset: "Rails" }.merge(overrides))
+  end
+
+  def create_job(overrides = {})
+    defaults = {
+      client: create_client,
+      developer: create_developer,
+      title: "Test Job",
+      description: "Test description",
+      reward: 1000,
+      status: "open",
+      deadline: 1.week.from_now
+    }
+
+    Job.create!(defaults.merge(overrides))
+  end
+
+  def override_job(overrides = {})
+    defaults = {
+      client: create_client,
+      developer: create_developer,
+      title: "Test Job",
+      description: "Test description",
+      reward: 1000,
+      status: "open",
+      deadline: 1.week.from_now
+    }
+
+    Job.new(defaults.merge(overrides))
+  end
 end
