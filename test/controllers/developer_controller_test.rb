@@ -1,6 +1,13 @@
 require "test_helper"
 
 class DeveloperControllerTest < ActionDispatch::IntegrationTest
+    test "should get index" do
+    create_developer
+    get developers_url
+    
+    assert_response :success
+  end
+
   test "should show developer with name" do
     developer = create_developer
 
