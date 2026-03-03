@@ -4,5 +4,15 @@ class Job < ApplicationRecord
 
   has_many :feedbacks, dependent: :destroy
 
-  validates :title, :description, presence: true
+  # DB Constraints
+  validates :title, 
+            :description,
+            :reward,
+            :status,
+            :deadline, 
+            presence: true
+  
+  # Status must be one of: 'open', 'in_progress', 'completed', 'cancelled'
+  validates :status, 
+            inclusion: { in: ['open', 'in_progress', 'completed', 'cancelled'] }
 end

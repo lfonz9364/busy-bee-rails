@@ -1,9 +1,19 @@
 class Feedback < ApplicationRecord
-  belongs_to :user
+  belongs_to :user # client
   belongs_to :job
 
+  # Ensure no empty feedbacks and valid ratings
   validates :comment, presence: true
   validates :rating, 
-            numericality: { only_integer: true, in: 1..5 }, 
-            allow_nil: true
+            presence: true,
+            inclusion: { in: 1..5, message: "must be between 1 and 5" }
+
+  # Helpers to easily access associated developer and client through job
+  def developer
+    job.developer
+  end
+
+  def client
+    job.client
+  end
 end

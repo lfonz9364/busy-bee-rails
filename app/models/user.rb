@@ -1,12 +1,25 @@
 class User < ActiveRecord::Base
   has_secure_password
 
-  belongs_to :developer
-  belongs_to :client
+  #  Roles
+  has_one :developer, dependent: :destroy
+  has_one :client,    dependent: :destroy
 
-  has_many :feedbacks
-  has_many :jobs, through: :feedbacks
+  # Feedbacks this user has written (as a client) or received (as a developer)
+  has_many  :authored_feedbacks,
+            class_name: 'Feedback',
+            dependent: :destroy
   
-  validates :name, presence: true
-  validates :email, presence: true, uniqueness: true
+  # Validations mirroring DB constraints
+  validates :name,
+            :email, 
+            :address,
+            :suburb, 
+            :postcode,
+            :country, 
+            :contact_person, 
+            :abn,             
+            presence: true
+
+  validates :email, uniqueness: true
 end
