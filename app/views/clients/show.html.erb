@@ -1,0 +1,17 @@
+<h1><%= @client.name %></h1>
+<p><%= @client.email %></p>
+
+<h2>Feedback Given</h2>
+<% if @feedbacks.any? %>
+  <ul>
+    <% @feedbacks.each do |feedback| %>
+      <li>
+        Rating: <%= feedback.rating %>|
+        Comment: <%= feedback.comment %>|
+        For Job: <%= feedback.job.title %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No feedback given yet.</p>
+<% end %>

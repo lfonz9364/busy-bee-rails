@@ -8,6 +8,10 @@ class Feedback < ApplicationRecord
             presence: true,
             inclusion: { in: 1..5, message: "must be between 1 and 5" }
 
+   validates :role,
+            presence: true,
+            inclusion: { in: %w[client developer] }
+
   # Helpers to easily access associated developer and client through job
   def developer
     job.developer
