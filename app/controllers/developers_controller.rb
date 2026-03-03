@@ -1,9 +1,8 @@
 class DevelopersController < ApplicationController
-  before_action :set_developer, only: [:show]
+  before_action :set_developer, only: :show
 
   def index
     @developers = Developer.includes(:user)
-    render plain: "OK"
   end
 
   def show
@@ -11,8 +10,6 @@ class DevelopersController < ApplicationController
     @feedbacks = @developer.received_feedbacks
                            .includes(:user,:job)
                            .order(created_at: :desc)
-
-    render plain: "OK"
   end
 
   private 

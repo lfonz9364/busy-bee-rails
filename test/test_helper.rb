@@ -71,4 +71,16 @@ class ActiveSupport::TestCase
 
     Job.new(defaults.merge(overrides))
   end
+
+  def create_feedback(overrides = {})
+    defaults = {
+      job: create_job,
+      user: create_client,
+      rating: 5,
+      comment: "Great work!",
+      role: "client"
+    }
+
+    Feedback.create!(defaults.merge(overrides))
+  end
 end
