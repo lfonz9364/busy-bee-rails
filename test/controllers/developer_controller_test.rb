@@ -37,4 +37,34 @@ class DeveloperControllerTest < ActionDispatch::IntegrationTest
     assert_match feedback.comment, @response.body
     assert_match feedback.rating.to_s, @response.body
   end
+
+  test "should show average rating" do
+    developer = create_developer
+    client1 = create_client
+    client2 = create_client
+
+    job1 = create_job(client: client1, developer: developer)
+    job2 = create_job(client: client2, developer: developer)
+
+    create_feedback(
+      job: job1, 
+      user: client1.user, 
+      rating: 4, 
+      comment: "Great work!", 
+      role:"client"
+    )
+
+    create_feedback(
+      job: job2, 
+      user: client2.user, 
+      rating: 5, 
+      comment: "Excellent!", 
+      role:"client"
+    )
+
+    get developer_url(developer)
+
+    assert_response :success
+    assert_match "Average Rating: 4.5", @response.body
+  end
 end
