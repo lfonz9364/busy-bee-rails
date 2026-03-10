@@ -13,20 +13,17 @@ class ApplicationController < ActionController::Base
   end
 
   def require_login
-    unless logged_in?
+    return if logged_in?
       redirect_to login_path, alert: "You must be logged in to access this section"
-    end
   end
 
   def require_admin
-    unless logged_in? && current_user.admin?
+    return if logged_in? && current_user.admin?
       redirect_to root_path, alert: "You do not have permission to access this section"
-    end
   end
 
-  def require__self
-    unless logged_in? && (current_user.id == params[:id].to_i)
+  def require_self_or_admin(user)
+    return if logged_in? && (current_user.id == user.id || current_user.admin?)
       redirect_to root_path, alert: "You do not have permission to access this section"
-    end
   end
 end

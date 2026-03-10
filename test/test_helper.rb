@@ -13,12 +13,14 @@ class ActiveSupport::TestCase
       email: "user#{SecureRandom.hex(4)}@example.com",
       address: "123 Test St",
       suburb: "Testville",
-      postcode: 3000,
+      state: "VIC",
+      postcode: "3000",
       country: "Australia",
       contact_person: "Tester",
       abn: "12345678901",
       password: "password123",
-      password_confirmation: "password123"
+      password_confirmation: "password123",
+      admin: false
     }
 
     User.create!(defaults.merge(overrides))
