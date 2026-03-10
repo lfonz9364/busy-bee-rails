@@ -1,6 +1,6 @@
 require "test_helper"
 
-class DeveloperControllerTest < ActionDispatch::IntegrationTest
+class DevelopersControllerTest < ActionDispatch::IntegrationTest
     test "should get index" do
     create_developer
     get developers_url

@@ -1,6 +1,6 @@
 require "test_helper"
 
-class ClientControllerTest < ActionDispatch::IntegrationTest
+class ClientsControllerTest < ActionDispatch::IntegrationTest
   test "should get index" do
     create_client
     get clients_url
