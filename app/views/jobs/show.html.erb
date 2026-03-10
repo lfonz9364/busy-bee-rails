@@ -1,0 +1,13 @@
+<h1>Jobs List</h1>
+<% if @jobs.any? %>
+  <ul>
+    <% @jobs.each do |job| %>
+      <li>
+        Title: <%= job.title %>|
+        Description: <%= job.description %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No jobs available.</p>
+<% end %>
