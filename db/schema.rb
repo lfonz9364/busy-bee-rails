@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_03_10_004846) do
+ActiveRecord::Schema[7.2].define(version: 2026_03_10_033018) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -63,7 +63,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_03_10_004846) do
     t.string "email", null: false
     t.string "address", null: false
     t.string "suburb", null: false
-    t.integer "postcode", null: false
+    t.string "postcode", null: false
     t.string "country", null: false
     t.string "contact_person", null: false
     t.string "password_digest", null: false
@@ -71,6 +71,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_03_10_004846) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "admin", default: false, null: false
+    t.string "state"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
             :email, 
             :address,
             :suburb, 
+            :state,
             :postcode,
             :country, 
             :contact_person, 
