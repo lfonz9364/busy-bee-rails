@@ -84,3 +84,12 @@ class ActiveSupport::TestCase
     Feedback.create!(defaults.merge(overrides))
   end
 end
+
+class ActionDispatch::IntegrationTest
+  def sign_in_as(user, password: "password123")
+    post login_url, params: {
+      email: user.email,
+      password: password
+    }
+  end
+end

@@ -44,16 +44,27 @@
     </header>
     <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
       <% if notice %>
-        <div class="mb-4 rounded-md border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm text-emerald-800">
+        <div class="mb-4 rounded-md border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm text-emerald-800 notice">
           <%= notice %>
         </div>
       <% end %>
       <% if alert %>
-        <div class="mb-4 rounded-md border border-rose-200 bg-rose-50 px-4 py-2 text-sm text-rose-800">
+        <div class="mb-4 rounded-md border border-rose-200 bg-rose-50 px-4 py-2 text-sm text-rose-800 alert">
           <%= alert %>
         </div>
       <% end %>
       <%= yield %>
+      <% if logged_in? %>
+        <div class="mt-4">
+          <p>Welcome back, <%= current_user.email %>!</p>
+          <%= button_to "Logout", logout_path, method: :delete %>
+        </div>
+      <% else %>
+        <div class="mt-4">
+          <p>Welcome, please log in.</p>
+          <%= button_to "Login", login_path, method: :get %>
+        </div>
+      <% end %>
     </main>
     <footer class="mt-8 border-t">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 text-xs flex justify-between">
