@@ -24,7 +24,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     user = create_user
     sign_in_as(user)
     delete logout_url
-    assert_redirected_to login_url
+    assert_redirected_to root_url
     follow_redirect!
     assert_select "div.notice", text: "Logged out!"
   end
