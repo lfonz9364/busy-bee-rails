@@ -7,8 +7,6 @@
     <%= csp_meta_tag %>
     <% unless Rails.env.test? %>
       <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
-      <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-      <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
     <% end %>
   </head>
   <body class="bg-[url('/assets/background.jpg')] bg-center bg-cover bg-fixed text-white min-h-screen">
