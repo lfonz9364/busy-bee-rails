@@ -38,7 +38,7 @@ class DevelopersControllerTest < ActionDispatch::IntegrationTest
     assert_match feedback.rating.to_s, @response.body
   end
 
-  test "should show average rating" do
+  test "should show rounded stars rating" do
     developer = create_developer
     client1 = create_client
     client2 = create_client
@@ -65,6 +65,6 @@ class DevelopersControllerTest < ActionDispatch::IntegrationTest
     get developer_url(developer)
 
     assert_response :success
-    assert_match "Average Rating: 4.5", @response.body
+    assert_match "Rating: ★★★★★ (4.5 / 5)", @response.body
   end
 end

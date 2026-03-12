@@ -1,14 +1,17 @@
 <h1><%= @developer.name %></h1>
 <p><%= @developer.email %></p>
-<p>Average Rating: <%= @average_rating %> / 5</p>
+<p>Rating: <%= @developer.star_rating %> (<%= @average_rating %> / 5)</p>
+<p>Total Reviews: <%= @reviews_count %></p>
+
 <h2>Feedbacks Received</h2>
+
 <% if @feedbacks.any? %>
   <ul>
     <% @feedbacks.each do |feedback| %>
       <li>
         Rating: <%= feedback.rating %>|
         Comment: <%= feedback.comment %>|
-        From: <%= feedback.client.name %>
+        From client: <%= feedback.client.name %>
       </li>
     <% end %>
   </ul>
