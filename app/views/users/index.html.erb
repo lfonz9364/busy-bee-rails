@@ -1,0 +1,25 @@
+<h1>Users List</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>State</th>
+      <th>Country</th>
+      <th>ABN</th>
+      <th>Joined On</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= link_to user.name, user_path(user) %></td>
+        <td><%= user.email %></td>
+        <td><%= user.state %></td>
+        <td><%= user.country %></td>
+        <td><%= user.abn %></td>
+        <td><%= user.created_at.strftime("%B %d, %Y") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

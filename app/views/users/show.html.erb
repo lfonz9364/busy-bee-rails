@@ -1,0 +1,9 @@
+<h1>Name: <%= @user.name %></h1>
+<p>Email: <%= @user.email %></p>
+<p>Contact Person: <%= @user.contact_person %></p>
+<p>ABN: <%= @user.abn %></p>
+<p>Location:</p>
+<p><%= @user.address %></p>
+<p><%= @user.suburb %>, <%= @user.state %> - <%= @user.postcode %>, <%= @user.country %></p>
+<p>Average Rating: <%= @average_rating %> / 5</p>
+<p>Joined on: <%= @user.created_at.strftime("%B %d, %Y") %></p>
