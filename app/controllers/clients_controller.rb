@@ -2,7 +2,7 @@ class ClientsController < ApplicationController
   before_action :set_client, only: :show
 
   def index
-    @clients = Client.includes(:user)
+    @clients = Client.includes(:user, :jobs, :authored_feedbacks)
   end
 
   def show
