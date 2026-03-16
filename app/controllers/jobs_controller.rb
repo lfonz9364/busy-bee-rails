@@ -1,6 +1,6 @@
 class JobsController < ApplicationController
   before_action :require_login
-  before_action :set_job, only: :show
+  before_action :set_job, only: %i[show edit update destroy]
   before_action :require_client, only: %i[new create edit update destroy]
   before_action :authorise_client_job_edit!, only: %i[edit update destroy]
 
@@ -50,9 +50,9 @@ class JobsController < ApplicationController
   end
 
   def authorise_client_job_edit!
-    return if @job.editable_by_client?(current_user)
+    return if @job&.editable_by_client?(current_user)
 
-    redirect_to @job, alert: "You are not allowed to modify this job"
+    redirect_to @job, alert: "You are not allowed to modify a job if you are not the client or it is taken by a developer"
   end
 
   def job_params

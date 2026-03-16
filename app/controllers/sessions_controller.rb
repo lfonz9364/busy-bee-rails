@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   def new
-    redirect_to root_path if logged_in?
+    redirect_to jobs_path if logged_in?
   end
 
   def create

@@ -23,7 +23,7 @@ class Job < ApplicationRecord
   def editable_by_client?(user)
     return false unless user&.client.present?
 
-    client == user.client && !taken!
+    client == user.client && !taken?
   end
 
   def deletable_by_client?(user)
