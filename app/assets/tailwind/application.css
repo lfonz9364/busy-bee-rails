@@ -1,1 +1,14 @@
 @import "tailwindcss";
+
+@theme {
+  --color-busybee-50: #f0fffe;
+  --color-busybee-100: #ccfbf8;
+  --color-busybee-200: #99f6f0;
+  --color-busybee-300: #5fe4de;
+  --color-busybee-400: #26cdc5;
+  --color-busybee-500: #00b8b0;
+  --color-busybee-600: #009e97;
+  --color-busybee-700: #0d7f7a;
+  --color-busybee-800: #136562;
+  --color-busybee-900: #154f4d;
+}
