@@ -1,20 +1,71 @@
-<h1><%= @developer.name %></h1>
-<p><%= @developer.email %></p>
-<p>Rating: <%= @developer.star_rating %> (<%= @average_rating %> / 5)</p>
-<p>Total Reviews: <%= @reviews_count %></p>
+<div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+  <section class="lg:col-span-1">
+    <div class="rounded-2xl border border-white/60 bg-white/88 p-6 shadow-xl backdrop-blur">
+      <div class="flex items-start gap-4">
+        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-busybee-100 text-lg font-semibold text-busybee-700">
+          <%= @developer.name.first.upcase %>
+        </div>
 
-<h2>Feedbacks Received</h2>
+        <div>
+          <h1 class="text-2xl font-bold tracking-tight text-slate-900"><%= @developer.name %></h1>
+          <p class="mt-1 text-sm text-slate-500"><%= @developer.email %></p>
+        </div>
+      </div>
 
-<% if @feedbacks.any? %>
-  <ul>
-    <% @feedbacks.each do |feedback| %>
-      <li>
-        Rating: <%= feedback.rating %>|
-        Comment: <%= feedback.comment %>|
-        From client: <%= feedback.client.name %>
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>No feedback received yet.</p>
-<% end %>
+      <% if @developer.skillset.present? %>
+        <div class="mt-6">
+          <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Skillset</p>
+          <p class="mt-2 text-sm text-slate-700"><%= @developer.skillset %></p>
+        </div>
+      <% end %>
+
+      <div class="mt-6">
+        <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Average rating</p>
+        <div class="mt-2 flex items-center gap-2">
+          <span class="text-lg text-busybee-600"><%= @developer.star_rating %></span>
+          <span class="text-sm text-slate-700"><%= @developer.average_rating %>/5</span>
+        </div>
+        <p class="mt-1 text-sm text-slate-500"><%= pluralize(@developer.reviews_count, "review") %></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="lg:col-span-2">
+    <div class="rounded-2xl border border-white/60 bg-white/88 p-6 shadow-xl backdrop-blur">
+      <div class="mb-6">
+        <h2 class="text-xl font-semibold text-slate-900">Feedback received</h2>
+        <p class="mt-1 text-sm text-slate-500">Reviews from clients based on completed work.</p>
+      </div>
+
+      <% if @feedbacks.any? %>
+        <div class="space-y-4">
+          <% @feedbacks.each do |feedback| %>
+            <article class="rounded-xl border border-slate-200/80 bg-white/80 p-4 shadow-sm">
+              <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <div>
+                  <p class="font-semibold text-slate-900"><%= feedback.client.name %></p>
+                  <p class="mt-1 text-sm text-slate-500">
+                    Job:
+                    <%= link_to feedback.job.title,
+                          job_path(feedback.job),
+                          class: "text-busybee-700 underline decoration-busybee-200 underline-offset-2 hover:text-busybee-800" %>
+                  </p>
+                </div>
+
+                <div class="text-busybee-600">
+                  <%= "★" * feedback.rating %><%= "☆" * (5 - feedback.rating) %>
+                </div>
+              </div>
+
+              <p class="mt-3 text-sm leading-6 text-slate-700">
+                <%= feedback.comment.presence || "No comment provided." %>
+              </p>
+            </article>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-sm text-slate-500">No feedback yet.</p>
+      <% end %>
+    </div>
+  </section>
+</div>

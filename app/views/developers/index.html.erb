@@ -1,2 +1,86 @@
-<h1>Developers</h1>
-<p>Total: <%= @developers.count %></p>
+<div class="mb-8 rounded-2xl border border-white/60 bg-white/80 p-6 shadow-lg backdrop-blur">
+  <h1 class="text-3xl font-bold tracking-tight text-slate-900">Developers</h1>
+  <p class="mt-1 text-sm text-slate-600">
+    Browse developer profiles and client feedback.
+  </p>
+</div>
+
+<% if @developers.any? %>
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+    <% @developers.each do |developer| %>
+
+      <%= link_to developer_path(developer),
+          class: "group block rounded-2xl border border-white/60 bg-white/88 p-6 shadow-xl backdrop-blur transition hover:-translate-y-1 hover:shadow-2xl" do %>
+
+        <article>
+
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-busybee-100 font-semibold text-busybee-700">
+              <%= developer.name.first.upcase %>
+            </div>
+
+            <div>
+              <h2 class="text-xl font-semibold text-slate-900 group-hover:text-busybee-700">
+                <%= developer.name %>
+              </h2>
+
+              <p class="mt-1 text-sm text-slate-500">
+                <%= developer.email %>
+              </p>
+            </div>
+
+            <span class="rounded-full bg-busybee-100 px-3 py-1 text-xs font-semibold text-busybee-800">
+              Developer
+            </span>
+          </div>
+
+          <div class="mt-5">
+            <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">
+              Skillset
+            </p>
+
+            <p class="mt-2 text-sm leading-6 text-slate-700">
+              <%= developer.skillset.presence || "No skillset added yet." %>
+            </p>
+          </div>
+
+          <div class="mt-6 flex items-center justify-between">
+
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                Rating
+              </p>
+
+              <div class="mt-1 flex items-center gap-2">
+                <span class="text-base text-busybee-600">
+                  <%= developer.star_rating %>
+                </span>
+
+                <span class="text-sm text-slate-600">
+                  <%= developer.average_rating %>/5
+                </span>
+              </div>
+
+              <p class="mt-1 text-sm text-slate-500">
+                <%= pluralize(developer.reviews_count, "review") %>
+              </p>
+            </div>
+
+            <span class="text-sm font-medium text-busybee-600 group-hover:underline">
+              View profile →
+            </span>
+
+          </div>
+
+        </article>
+
+      <% end %>
+
+    <% end %>
+  </div>
+
+<% else %>
+  <div class="rounded-2xl border border-white/60 bg-white/88 p-6 text-sm text-slate-500 shadow-xl backdrop-blur">
+    No developers found.
+  </div>
+<% end %>
