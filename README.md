@@ -28,6 +28,22 @@ I choose to follow the best practice of doing the documentation and planning at 
 - Rails DB auto generate id unlike sql file where id need to be specified when created a table
 - Set a column as FK automatically indexed it
 - Model must refer to db schema to properly create and validate data
+- Application layer cascade is a better solution than a DB layer cascade for allowing parent record deletion
+- SaaS like Rails app should have a validations in Models
+- Only delegate necessary information especially related to public profile
+- run test "bin/rails test test/models"
+- open rails console "bin/rails console"
+- Minitest provide built-in datetime mock
+- Routing in Ruby evaluated from top to bottom so it's important to put paths in order - from specific to general
+- Rails function are hoisted by default so function could be used before declaration
+- AI will suggestions always based on general logics instead of specificity
+- Session route is always singular
+- Assert.select select an element with exact text as well
+- To see test run log (tail -n 100 log/test.log)
+- "!" used to represent function with side effect mutating object or raise exceptions
+- reset db bin/rails db:drop, bin/rails db:create, bin/rails db:migrate
+- Rails 7 did not use turbolinks anymore and tailwind did not require it
+- Default theme can be added directly to app/assets/tailwind/application.css and run `bin/rails tailwindcss:build`
 
 ### Unsolved Problems
 
