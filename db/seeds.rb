@@ -31,6 +31,7 @@ users = User.create!([
     country: 'Australia',
     contact_person: 'Agatha',
     abn: '12345432123',
+    role: 'developer',
     password: 'password123',
     password_confirmation: 'password123'
   },
@@ -44,6 +45,7 @@ users = User.create!([
     country: 'Australia',
     contact_person: 'Barry',
     abn: '87665434521',
+    role: 'developer',
     password: 'password123',
     password_confirmation: 'password123'
   },
@@ -57,6 +59,7 @@ users = User.create!([
     country: 'Australia',
     contact_person: 'Martina',
     abn: '87645632123',
+    role: 'developer',
     password: 'password123',
     password_confirmation: 'password123'
   },
@@ -70,6 +73,7 @@ users = User.create!([
     country: 'Australia',
     contact_person: 'Arthur',
     abn: '56478678612',
+    role: 'developer',
     password: 'password123',
     password_confirmation: 'password123'
   },
@@ -83,6 +87,7 @@ users = User.create!([
     country: 'Australia',
     contact_person: 'Danie',
     abn: '15562790878',
+    role: 'client',
     password: 'password123',
     password_confirmation: 'password123'
   },
@@ -96,6 +101,7 @@ users = User.create!([
     country: 'Australia',
     contact_person: 'Andrew',
     abn: '18759654078',
+    role: 'client',
     password: 'password123',
     password_confirmation: 'password123'
   },
@@ -109,6 +115,7 @@ users = User.create!([
     country: 'Australia',
     contact_person: 'John',
     abn: '12345678901',
+    role: 'developer',
     password: 'password123',
     password_confirmation: 'password123'
   },
@@ -122,6 +129,7 @@ users = User.create!([
     country: 'Australia',
     contact_person: 'Jane',
     abn: '896773465',
+    role: 'client',
     password: 'password123',
     password_confirmation: 'password123'
   },
@@ -135,6 +143,7 @@ users = User.create!([
     country: 'Australia',
     contact_person: 'Alfons',
     abn: '35466876723',
+    role: 'client',
     password: 'password123',
     password_confirmation: 'password123',
     admin: true
@@ -149,6 +158,7 @@ users = User.create!([
     country: 'Australia',
     contact_person: 'Michael',
     abn: '35656654732',
+    role: 'client',
     password: 'password123',
     password_confirmation: 'password123'
   }
