@@ -18,6 +18,10 @@ class Developer < ApplicationRecord
 
   validates :skillset,  presence: true, allow_blank: false
 
+  validate :user_is_not_already_a_client
+
+  after_create :assign_user_role
+
   def average_rating
     return 0.0 if received_feedbacks.empty?
     received_feedbacks.average(:rating).to_f.round(2)
@@ -30,5 +34,17 @@ class Developer < ApplicationRecord
   def star_rating
     return "No ratings yet" if reviews_count.zero?
     "★" * average_rating.round + "☆" * (5 - average_rating.round)
+  end
+
+  private
+
+  def assign_user_role
+    user.update_column(:role, "developer")
+  end
+
+  def user_is_not_already_a_client
+    return unless user&.client.present?
+
+    errors.add(:user, "is already registered as a client")
   end
 end

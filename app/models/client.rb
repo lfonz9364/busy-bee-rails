@@ -16,4 +16,20 @@ class Client < ApplicationRecord
            :email,
            :abn,
            to: :user
+
+  validate :user_is_not_already_a_developer
+
+  after_create :assign_user_role
+
+  private
+
+  def assign_user_role
+    user.update_column(:role, "client")
+  end
+
+  def user_is_not_already_a_developer
+    return unless user&.developer.present?
+
+    errors.add(:user, "is already registered as a developer")
+  end
 end

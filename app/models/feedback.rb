@@ -20,4 +20,12 @@ class Feedback < ApplicationRecord
   def client
     job.client
   end
+
+  def editable_by_client?(actor)
+    return false unless actor&.client.present?
+    return false unless user == actor
+    return false unless role == "client"
+
+    Time.current <= (job.deadline + 30.days)
+  end
 end

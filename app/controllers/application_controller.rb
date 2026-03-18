@@ -24,6 +24,12 @@ class ApplicationController < ActionController::Base
       redirect_to root_path, alert: "You do not have permission to access this section"
   end
 
+  def require_client
+    return if logged_in? && current_user.client.present?
+
+    redirect_to root_path, alert: "Only clients can access this section"
+  end
+
   def require_self_or_admin(user)
     return if logged_in? && (current_user.id == user.id || current_user.admin?)
       redirect_to root_path, alert: "You do not have permission to access this section"

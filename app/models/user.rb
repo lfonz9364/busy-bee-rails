@@ -23,4 +23,6 @@ class User < ActiveRecord::Base
             presence: true
 
   validates :email, uniqueness: true
+  
+  validates :role, inclusion: { in: %w[client developer] }, allow_nil: true
 end
