@@ -12,7 +12,13 @@ Rails.application.routes.draw do
   resources :registrations, only: %i[new create]
   resources :developers,    only: [:index, :show]
   resources :clients,       only: [:index, :show]
-  resources :users,         only: [:index, :show]
+
+  resources :users,         only: [:index, :show, :edit, :update] do
+    member do
+      patch :make_admin
+    end
+  end
+
   resources :jobs do
     resources :feedbacks,   only: [:new, :create] 
   end
