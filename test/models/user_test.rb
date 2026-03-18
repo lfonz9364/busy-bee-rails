@@ -13,6 +13,7 @@ class UserTest < ActiveSupport::TestCase
       contact_person: "Test Contact",
       abn: "123456789",
       password: "password",
+      role: 'client',
       password_confirmation: "password"
     )
     assert user.valid?
@@ -29,10 +30,11 @@ class UserTest < ActiveSupport::TestCase
     assert_includes user.errors[:country], "can't be blank"
     assert_includes user.errors[:contact_person], "can't be blank"
     assert_includes user.errors[:abn], "can't be blank"
+    assert_includes user.errors[:role], "is not included in the list"
   end
 
   test "email must be unique" do
-    User.create!(
+    create_user(
       name: "Existing User",
       email: "test@example.com",
       address: "123 Test St",
@@ -56,6 +58,7 @@ class UserTest < ActiveSupport::TestCase
       contact_person: "Test Contact",
       abn: "987654321",
       password: "password",
+      role:"developer",
       password_confirmation: "password"
     )
     assert_not user.valid?

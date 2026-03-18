@@ -20,6 +20,7 @@ class ActiveSupport::TestCase
       abn: "12345678901",
       password: "password123",
       password_confirmation: "password123",
+      role: "client",
       admin: false
     }
 
@@ -30,7 +31,7 @@ class ActiveSupport::TestCase
     user_overrides = {
       name: "Test Client",
       email: "client#{SecureRandom.hex(4)}@example.com",
-      contact_person: "Client Contact"
+      contact_person: "Client Contact",
     }
     user = overrides.delete(:user) || create_user(user_overrides)
     Client.create!({ user: user }.merge(overrides))
@@ -40,7 +41,8 @@ class ActiveSupport::TestCase
     user_overrides = {
       name: "Test Developer",
       email: "developer#{SecureRandom.hex(4)}@example.com",
-      contact_person: "Developer Contact"
+      contact_person: "Developer Contact",
+      role: "developer"
     }
     user = overrides.delete(:user) || create_user(user_overrides)
     Developer.create!({ user: user, skillset: "Rails" }.merge(overrides))
