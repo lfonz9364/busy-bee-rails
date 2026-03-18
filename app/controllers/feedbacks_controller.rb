@@ -27,14 +27,11 @@ class FeedbacksController < ApplicationController
     @feedback.user = current_user
     @feedback.role = "client"
 
-    if @feedback.editable_by_client?(current_user) || within_feedback_window_for_new?(@job)
-      if @feedback.save
+    if (@feedback.editable_by_client?(current_user) || within_feedback_window_for_new?(@job)) && @feedback.save
         redirect_to @job, notice: "Feedback created successfully."
-      else
-        render :new, status: :unprocessable_entity
-      end
     else
       redirect_to @job, alert: "Feedback can only be created within 30 days after the job deadline."
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -50,8 +47,9 @@ class FeedbacksController < ApplicationController
   end
 
   def destroy
+    job = @feedback.job
     @feedback.destroy
-    redirect_to @feedback.job, notice: "Feedback deleted successfully."
+    redirect_to job, notice: "Feedback deleted successfully."
   end
 
   private

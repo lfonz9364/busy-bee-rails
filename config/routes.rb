@@ -13,5 +13,9 @@ Rails.application.routes.draw do
   resources :developers,    only: [:index, :show]
   resources :clients,       only: [:index, :show]
   resources :users,         only: [:index, :show]
-  resources :jobs
+  resources :jobs do
+    resources :feedbacks,   only: [:new, :create] 
+  end
+
+  resources :feedbacks,     only: [:index, :show, :edit, :update, :destroy]
 end

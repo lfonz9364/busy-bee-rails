@@ -17,6 +17,10 @@ class JobsController < ApplicationController
     @feedbacks = @job.feedbacks.includes(:client).order(created_at: :desc)
   end
 
+  def new
+    @job = Job.new
+  end
+
   def create
     @job = current_user.client.jobs.build(job_params)
 
