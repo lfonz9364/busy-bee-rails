@@ -41,4 +41,10 @@ class ApplicationController < ActionController::Base
 
     session[:forwarding_url] = request.original_url
   end
+
+  def require_developer
+    return if logged_in? && current_user.developer.present?
+    
+    redirect_to root_path, alert: "Only developers can access this section"
+  end
 end
