@@ -2,7 +2,9 @@ class Job < ApplicationRecord
   belongs_to :client
   belongs_to :developer, optional: true
 
-  has_many :feedbacks, dependent: :destroy
+  has_many :feedbacks,            dependent: :destroy
+  has_many :job_applications,     dependent: :destroy
+  has_many :applicant_developers, through: :job_applications, source: :developer  
 
   # DB Constraints
   validates :title, 
@@ -32,5 +34,9 @@ class Job < ApplicationRecord
 
   def visible_to?(user)
     user.present?
+  end
+
+  def open_for_applications?
+    status == "open" && !taken?
   end
 end

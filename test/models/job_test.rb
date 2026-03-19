@@ -31,4 +31,25 @@ class JobTest < ActiveSupport::TestCase
     assert job.persisted?
   end
 
+  test "open_for_applications? is true when open and not taken" do
+    client = create_client
+    job = create_job(client: client, developer: nil, status: "open")
+
+    assert job.open_for_applications?
+  end
+
+  test "open_for_applications? is false when taken" do
+    client = create_client
+    developer = create_developer
+    job = create_job(client: client, developer: developer, status: "open")
+
+    assert_not job.open_for_applications?
+  end
+
+  test "open_for_applications? is false when not open" do
+    client = create_client
+    job = create_job(client: client, developer: nil, status: "in_progress")
+
+    assert_not job.open_for_applications?
+  end
 end
