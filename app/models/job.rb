@@ -6,7 +6,6 @@ class Job < ApplicationRecord
   has_many :job_applications,     dependent: :destroy
   has_many :applicant_developers, through: :job_applications, source: :developer  
 
-  # DB Constraints
   validates :title, 
             :description,
             :reward,
@@ -14,7 +13,6 @@ class Job < ApplicationRecord
             :deadline, 
             presence: true
   
-  # Status must be one of: 'open', 'in_progress', 'completed', 'cancelled'
   validates :status, 
             inclusion: { in: ['open', 'in_progress', 'completed', 'cancelled'] }
 
@@ -38,5 +36,23 @@ class Job < ApplicationRecord
 
   def open_for_applications?
     status == "open" && !taken?
+  end
+
+  def completable_by_client?(user)
+    user&.client.present? &&
+    client == user.client &&
+    status == 'in_progress'
+  end
+
+  def completed?
+    status == "completed"
+  end
+
+  def mark_completed!
+    update!(status: "completed")
+  end
+
+  def feedback_allowed?
+    completed?
   end
 end

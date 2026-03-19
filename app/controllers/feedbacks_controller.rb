@@ -18,11 +18,23 @@ class FeedbacksController < ApplicationController
 
   def new
     @job = Job.find(params[:job_id])
+
+    unless feedback_allowed_for_job?(@job)
+      redirect_to @job, alert: "Feedback can only be created after the job is completed"
+      return
+    end
+
     @feedback = @job.feedbacks.build
   end
 
   def create
     @job = Job.find(params[:job_id])
+
+    unless feedback_allowed_for_job?(@job)
+      redirect_to @job, alert: "Feedback can olny be created after the job is completed"
+      return  
+    end
+
     @feedback = @job.feedbacks.build(feedback_params)
     @feedback.user = current_user
     @feedback.role = "client"
@@ -66,6 +78,10 @@ class FeedbacksController < ApplicationController
 
   def within_feedback_window_for_new?(job)
     current_user.client == job.client && Time.current <= (job.deadline + 30.days)
+  end
+
+  def feedback_allowed_for_job?(job)
+    current_user.client == job.client && job.feedback_allowed?
   end
 
   def feedback_params

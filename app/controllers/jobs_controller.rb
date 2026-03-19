@@ -1,8 +1,9 @@
 class JobsController < ApplicationController
   before_action :require_login
-  before_action :set_job, only: %i[show edit update destroy]
-  before_action :require_client, only: %i[new create edit update destroy]
+  before_action :set_job, only: %i[show edit update destroy complete]
+  before_action :require_client, only: %i[new create edit update destroy complete]
   before_action :authorise_client_job_edit!, only: %i[edit update destroy]
+  before_action :authorise_client_job_completion!, only: %i[complete]
 
   def index
     @jobs = Job.includes(developer: :user, client: :user).order(created_at: :desc)
@@ -15,6 +16,7 @@ class JobsController < ApplicationController
 
   def show
     @feedbacks = @job.feedbacks.includes(:client).order(created_at: :desc)
+    @client_feedback = current_user&.client == @job.client ? @job.feedbacks.find_by(user: current_user, role: "client") : nil
   end
 
   def new
@@ -47,6 +49,11 @@ class JobsController < ApplicationController
     redirect_to jobs_path, notice: "Job deleted succesfully"
   end
 
+  def complete
+    @job.mark_completed!
+    redirect_to @job, notice: "Job marked as completed"
+  end
+
   private 
 
   def set_job
@@ -57,6 +64,12 @@ class JobsController < ApplicationController
     return if @job&.editable_by_client?(current_user)
 
     redirect_to @job, alert: "You are not allowed to modify a job if you are not the client or it is taken by a developer"
+  end
+
+  def authorise_client_job_completion!
+    return if @job.completable_by_client?(current_user)
+
+    redirect_to @job, alert: "You are not allowed to complete this job"
   end
 
   def job_params

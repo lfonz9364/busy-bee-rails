@@ -75,25 +75,45 @@
                 jobs_path,
                 class: "inline-flex items-center justify-center rounded-md border border-busybee-300 bg-white px-4 py-2 text-sm font-medium text-busybee-700 hover:bg-busybee-50" %>
 
-					<% if logged_in? && current_user.client.present? && current_user.client == @job.client %>
+					<% if logged_in? && 
+                current_user.client.present? && 
+                current_user.client == @job.client && 
+                @job.feedback_allowed? 
+          %>
+					<% if @client_feedback.present? %>
+						<%= link_to "Edit feedback",
+                  edit_feedback_path(@client_feedback),
+                  class: "inline-flex items-center justify-center rounded-md border border-busybee-300 bg-white px-4 py-2 text-sm font-medium text-busybee-700 hover:bg-busybee-50" %>
+					<% else %>
 						<%= link_to "Write feedback",
-                new_job_feedback_path(@job),
-                class: "inline-flex items-center justify-center rounded-md border border-busybee-300 bg-white px-4 py-2 text-sm font-medium text-busybee-700 hover:bg-busybee-50" %>
+                  new_job_feedback_path(@job),
+                  class: "inline-flex items-center justify-center rounded-md border border-busybee-300 bg-white px-4 py-2 text-sm font-medium text-busybee-700 hover:bg-busybee-50" %>
 					<% end %>
+				<% end %>
 
-					<% if logged_in? && current_user.client.present? && @job.editable_by_client?(current_user) %>
-						<%= link_to "Edit job",
+				<% if logged_in? && current_user.client.present? && @job.editable_by_client?(current_user) %>
+					<%= link_to "Edit job",
                 edit_job_path(@job),
                 class: "inline-flex items-center justify-center rounded-md bg-busybee-500 px-4 py-2 text-sm font-medium text-white hover:bg-busybee-600" %>
 
-						<%= button_to "Delete job",
+					<%= button_to "Delete job",
                   job_path(@job),
                   method: :delete,
                   data: { confirm: "Are you sure you want to delete this job?" },
                   class: "inline-flex items-center justify-center rounded-md bg-rose-600 px-4 py-2 text-sm font-medium text-white hover:bg-rose-700" %>
-					<% end %>
-				</div>
+				<% end %>
+
+				<% if logged_in? && @job.completable_by_client?(current_user) %>
+					<div class="mt-6">
+						<%= button_to "Mark job as done",
+                  complete_job_path(@job),
+                  method: :patch,
+                  data: { confirm: "Mark this job as completed?" },
+                  class: "rounded-md bg-busybee-500 px-4 py-2 text-sm font-medium text-white hover:bg-busybee-600" %>
+					</div>
+				<% end %>
 			</div>
 		</div>
-	</section>
+	</div>
+</section>
 </div>
