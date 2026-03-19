@@ -10,7 +10,7 @@
 				<span class="font-semibold text-busybee-700"><%= existing_application.status.humanize %></span>
 			</p>
 		<% else %>
-			<%= form_with url: job_job_applications_path(@job), local: true, class: "mt-4 space-y-4" do |f| %>
+			<%= form_with url: job_job_applications_path(@job), scope: :job_application, local: true, class: "mt-4 space-y-4" do |f| %>
 				<div>
 					<%= f.label :message, "Application message", class: "mb-1 block text-sm font-medium text-slate-700" %>
 					<%= f.text_area :message,

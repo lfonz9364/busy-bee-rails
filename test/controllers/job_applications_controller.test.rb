@@ -112,4 +112,42 @@ class JobApplicationsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_url
     assert_equal "pending", application.reload.status
   end
+
+  test "developer application saves the submitted message" do
+    client = create_client
+    developer = create_developer
+    job = create_job(client: client, developer: nil, status: "open")
+
+    sign_in_as(developer.user)
+
+    post job_job_applications_url(job), params: {
+      job_application: {
+        message: "I have 5 years of Rails experience."
+      }
+    }
+
+    assert_redirected_to job_url(job)
+
+    application = JobApplication.last
+    assert_equal developer, application.developer
+    assert_equal job, application.job
+    assert_equal "I have 5 years of Rails experience.", application.message
+  end
+
+  test "developer application can be created with blank message" do
+    client = create_client
+    developer = create_developer
+    job = create_job(client: client, developer: nil, status: "open")
+
+    sign_in_as(developer.user)
+
+    post job_job_applications_url(job), params: {
+      job_application: {
+        message: ""
+      }
+    }
+
+    assert_redirected_to job_url(job)
+    assert_equal "", JobApplication.last.message
+  end
 end

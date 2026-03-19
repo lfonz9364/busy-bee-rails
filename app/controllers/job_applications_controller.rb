@@ -14,7 +14,7 @@ class JobApplicationsController < ApplicationController
 
     @job_application = @job.job_applications.build(
       developer: current_user.developer,
-      message: params[:job_application][:message]
+      message: params.dig(:job_application, :message)
     )
 
     if @job_application.save
