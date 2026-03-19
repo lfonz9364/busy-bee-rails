@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :require_login
-  before_action :set_user, only: %i[show edit update]
+  before_action :set_user, only: %i[show edit update make_admin]
   before_action :authorise_user_access!, only: %i[show edit update]
   before_action :require_admin, only: %i[index make_admin]
 
@@ -44,7 +44,7 @@ class UsersController < ApplicationController
   end
 
   def authorise_user_access!
-    return if current_user.admin?
+    return if current_user&.admin?
     return if current_user == @user
 
     redirect_to root_path, alert: "You are not authorised to access this profile."
