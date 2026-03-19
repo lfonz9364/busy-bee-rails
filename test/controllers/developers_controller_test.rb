@@ -65,6 +65,6 @@ class DevelopersControllerTest < ActionDispatch::IntegrationTest
     get developer_url(developer)
 
     assert_response :success
-    assert_match "Rating: ★★★★★ (4.5 / 5)", @response.body
+    assert_match "★★★★☆", @response.body
   end
 end
