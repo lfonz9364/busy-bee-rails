@@ -25,6 +25,15 @@
 					<%= pluralize(@client.jobs.count, "job") %>
 				</p>
 			</div>
+
+			<% if logged_in? && current_user == @client.user %>
+				<div class="mt-8">
+					<%= link_to user_path(current_user),
+              class: "inline-flex items-center gap-2 rounded-md border border-busybee-200 bg-white px-3 py-2 text-sm font-medium text-busybee-700 hover:bg-busybee-50" do %>
+						← Back to My Profile
+					<% end %>
+				</div>
+			<% end %>
 		</div>
 	</section>
 

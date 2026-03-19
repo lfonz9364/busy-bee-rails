@@ -1,0 +1,81 @@
+<div class="mx-auto max-w-3xl rounded-2xl border border-white/60 bg-white/88 p-6 shadow-xl backdrop-blur">
+	<div class="mb-6">
+		<h1 class="text-3xl font-bold tracking-tight text-slate-900">Edit profile</h1>
+		<p class="mt-1 text-sm text-slate-500">
+			Update your personal and contact information.
+		</p>
+	</div>
+
+	<%= form_with model: @user, local: true, class: "space-y-5" do |f| %>
+		<% if @user.errors.any? %>
+			<div class="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800">
+				<p class="mb-2 font-semibold">
+					<%= pluralize(@user.errors.count, "error") %> prevented this profile from being saved:
+				</p>
+				<ul class="list-disc pl-5">
+					<% @user.errors.full_messages.each do |message| %>
+						<li><%= message %></li>
+					<% end %>
+				</ul>
+			</div>
+		<% end %>
+
+		<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+			<div>
+				<%= f.label :name, class: "mb-1 block text-sm font-medium text-slate-700" %>
+				<%= f.text_field :name, class: "block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-busybee-500 focus:outline-none focus:ring-1 focus:ring-busybee-500" %>
+			</div>
+
+			<div>
+				<%= f.label :email, class: "mb-1 block text-sm font-medium text-slate-700" %>
+				<%= f.email_field :email, class: "block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-busybee-500 focus:outline-none focus:ring-1 focus:ring-busybee-500" %>
+			</div>
+
+			<div>
+				<%= f.label :contact_person, class: "mb-1 block text-sm font-medium text-slate-700" %>
+				<%= f.text_field :contact_person, class: "block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-busybee-500 focus:outline-none focus:ring-1 focus:ring-busybee-500" %>
+			</div>
+
+			<div>
+				<%= f.label :abn, class: "mb-1 block text-sm font-medium text-slate-700" %>
+				<%= f.text_field :abn, class: "block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-busybee-500 focus:outline-none focus:ring-1 focus:ring-busybee-500" %>
+			</div>
+		</div>
+
+		<div>
+			<%= f.label :address, class: "mb-1 block text-sm font-medium text-slate-700" %>
+			<%= f.text_field :address, class: "block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-busybee-500 focus:outline-none focus:ring-1 focus:ring-busybee-500" %>
+		</div>
+
+		<div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+			<div>
+				<%= f.label :suburb, class: "mb-1 block text-sm font-medium text-slate-700" %>
+				<%= f.text_field :suburb, class: "block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-busybee-500 focus:outline-none focus:ring-1 focus:ring-busybee-500" %>
+			</div>
+
+			<div>
+				<%= f.label :state, class: "mb-1 block text-sm font-medium text-slate-700" %>
+				<%= f.text_field :state, class: "block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-busybee-500 focus:outline-none focus:ring-1 focus:ring-busybee-500" %>
+			</div>
+
+			<div>
+				<%= f.label :postcode, class: "mb-1 block text-sm font-medium text-slate-700" %>
+				<%= f.text_field :postcode, class: "block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-busybee-500 focus:outline-none focus:ring-1 focus:ring-busybee-500" %>
+			</div>
+		</div>
+
+		<div>
+			<%= f.label :country, class: "mb-1 block text-sm font-medium text-slate-700" %>
+			<%= f.text_field :country, class: "block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-busybee-500 focus:outline-none focus:ring-1 focus:ring-busybee-500" %>
+		</div>
+
+		<div class="flex items-center gap-3 pt-2">
+			<%= f.submit "Update profile",
+            class: "rounded-md bg-busybee-500 px-4 py-2 text-sm font-medium text-white hover:bg-busybee-600" %>
+
+			<%= link_to "Cancel",
+            user_path(@user),
+            class: "rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50" %>
+		</div>
+	<% end %>
+</div>
