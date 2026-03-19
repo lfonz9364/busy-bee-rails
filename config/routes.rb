@@ -20,8 +20,16 @@ Rails.application.routes.draw do
   end
 
   resources :jobs do
-    resources :feedbacks,   only: [:new, :create] 
+    resources :feedbacks,         only: [:new, :create]
+    resources :job_applications,  only: [:create]
   end
 
-  resources :feedbacks,     only: [:index, :show, :edit, :update, :destroy]
+  resources :feedbacks,           only: [:index, :show, :edit, :update, :destroy]
+
+  resources :job_applications,    only: [] do
+    member do
+      patch :accept
+      patch :decline
+    end
+  end
 end
