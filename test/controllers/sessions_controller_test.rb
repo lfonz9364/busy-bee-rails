@@ -6,11 +6,18 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should log in with valid credentials" do
+  test "should log in with valid credentials using single redirect chain" do
     user = create_user
+
     post login_url, params: { email: user.email, password: "password123" }
-    assert_redirected_to root_url
+    
+    assert_redirected_to jobs_url
+
     follow_redirect!
+
+    assert_response :success
+    assert_not response.redirect?
+
     assert_select "div.notice", text: "Logged in!"
   end
 

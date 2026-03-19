@@ -13,10 +13,10 @@ class ApplicationController < ActionController::Base
   end
 
   def require_login
-    unless logged_in?
+    return if logged_in?
+
       store_location
       redirect_to login_path, alert: "You must be logged in to access this section"
-    end
   end
 
   def require_admin
@@ -36,6 +36,9 @@ class ApplicationController < ActionController::Base
   end
 
   def store_location
-    session[:forwarding_url] = request.original_url if request.get?
+    return unless request.get?
+    return if request.path.in?([login_path, signup_path, logout_path])
+
+    session[:forwarding_url] = request.original_url
   end
 end
