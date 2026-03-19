@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root "sessions#new"
 
+  get "/my-application", to: "job_applications#mine", as: :my_applications
   get  "/signup", to: "registrations#new"
   post "/signup", to: "registrations#create"
 

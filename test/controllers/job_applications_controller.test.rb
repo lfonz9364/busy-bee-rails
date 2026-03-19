@@ -150,4 +150,44 @@ class JobApplicationsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to job_url(job)
     assert_equal "", JobApplication.last.message
   end
+
+  test "developer can view their grouped applications page" do
+    client = create_client
+    developer = create_developer
+    other_developer = create_developer
+
+    pending_job = create_job(client: client, developer: nil, status: "open")
+    declined_job = create_job(client: client, developer: nil, status: "open")
+    in_progress_job = create_job(client: client, developer: developer, status: "in_progress")
+    completed_job = create_job(client: client, developer: developer, status: "completed")
+
+    JobApplication.create!(job: pending_job, developer: developer, status: "pending", message: "Pending message")
+    JobApplication.create!(job: declined_job, developer: developer, status: "declined", message: "Declined message")
+    JobApplication.create!(job: pending_job, developer: other_developer, status: "pending", message: "Other developer")
+
+    sign_in_as(developer.user)
+
+    get my_applications_url
+
+    assert_response :success
+    assert_match "Pending Applications", @response.body
+    assert_match "In Progress Jobs", @response.body
+    assert_match "Declined Applications", @response.body
+    assert_match "Completed Jobs", @response.body
+
+    assert_match pending_job.title, @response.body
+    assert_match declined_job.title, @response.body
+    assert_match in_progress_job.title, @response.body
+    assert_match completed_job.title, @response.body
+  end
+
+  test "non developer cannot view grouped applications page" do
+    client = create_client
+
+    sign_in_as(client.user)
+
+    get my_applications_url
+
+    assert_redirected_to root_url
+  end
 end

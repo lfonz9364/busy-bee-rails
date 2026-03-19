@@ -1,19 +1,16 @@
 class Developer < ApplicationRecord
   belongs_to :user
 
-  # Jobs this developer has been hired for
-  has_many :jobs, dependent: :nullify
 
-  # Feedbacks this developer has received from clients
+  has_many :jobs,             dependent: :nullify
+  has_many :job_applications, dependent: :destroy
+  has_many :applied_jobs,     through: :job_applications, source: :job
+
   has_many :received_feedbacks,
            -> { where(role:'client')}, # only client-written reviews 
            through: :jobs, 
            source: :feedbacks
 
-  has_many :job_applications, dependent: :destroy
-  has_many :applied_jobs,     through: :job_applications, source: :job
-
-  # Delegate user attributes to avoid redundant calls (e.g., developer.name instead of developer.user.name)
   delegate :name,
            :email,
            :abn,
@@ -27,6 +24,7 @@ class Developer < ApplicationRecord
 
   def average_rating
     return 0.0 if received_feedbacks.empty?
+
     received_feedbacks.average(:rating).to_f.round(2)
   end
 
@@ -37,6 +35,32 @@ class Developer < ApplicationRecord
   def star_rating
     return "No ratings yet" if reviews_count.zero?
     "★" * average_rating.round + "☆" * (5 - average_rating.round)
+  end
+
+  def pending_job_applications
+    job_applications
+    .includes(job: { client: :user })
+    .where(status: "pending")
+    .order(created_at: :desc)
+  end
+
+  def declined_job_applications
+    job_applications
+    .includes(job: { client: :user })
+    .where(status: ["declined", "auto_declined"])
+    .order(updated_at: :desc)
+  end
+
+  def in_progress_jobs
+    Job.includes(client: :user)
+       .where(developer: self, status: "in_progress")
+       .order(updated_at: :desc)
+  end
+
+  def completed_jobs
+    Job.includes(client: :user)
+       .where(developer: self, status: "completed")
+       .order(updated_at: :desc)
   end
 
   private

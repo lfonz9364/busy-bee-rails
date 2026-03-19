@@ -5,7 +5,14 @@
 	</p>
 
 	<% if logged_in? && current_user.client.present? %>
-		<%= link_to "+ Post Job", new_job_path,
+		<%= link_to "+ Post Job", 
+        new_job_path,
+        class: "rounded-md bg-busybee-500 px-4 py-2 text-sm font-medium text-white hover:bg-busybee-600 mt-6 flex items-center justify-self-end" %>
+	<% end %>
+
+	<% if logged_in? && current_user.developer.present? %>
+		<%= link_to "My Applications", 
+        my_applications_path, 
         class: "rounded-md bg-busybee-500 px-4 py-2 text-sm font-medium text-white hover:bg-busybee-600 mt-6 flex items-center justify-self-end" %>
 	<% end %>
 </div>

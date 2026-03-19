@@ -6,6 +6,15 @@ class JobApplicationsController < ApplicationController
   before_action :require_client, only: [:accept, :decline]
   before_action :authorise_client_review!, only: [:accept, :decline]
 
+  def mine
+    developer = current_user.developer
+
+    @pending_applications = developer.pending_job_applications
+    @declined_applications = developer.declined_job_applications
+    @in_progress_jobs = developer.in_progress_jobs
+    @completed_jobs = developer.completed_jobs
+  end
+
   def create
     unless @job.open_for_applications?
       redirect_to @job, alert: "This job is not open for applications."
