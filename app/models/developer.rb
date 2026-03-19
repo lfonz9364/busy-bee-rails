@@ -10,6 +10,9 @@ class Developer < ApplicationRecord
            through: :jobs, 
            source: :feedbacks
 
+  has_many :job_applications, dependent: :destroy
+  has_many :applied_jobs,     through: :job_applications, source: :job
+
   # Delegate user attributes to avoid redundant calls (e.g., developer.name instead of developer.user.name)
   delegate :name,
            :email,
