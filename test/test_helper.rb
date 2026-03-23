@@ -48,6 +48,10 @@ class ActiveSupport::TestCase
     Developer.create!({ user: user, skillset: "Rails" }.merge(overrides))
   end
 
+  def create_admin(overrides = {})
+    create_user({admin: true})
+  end
+
   def create_job(overrides = {})
     defaults = {
       client: create_client,

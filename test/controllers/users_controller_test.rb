@@ -17,8 +17,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "allows index when logged in as admin" do
-    admin = create_user(admin: true)
-    create_user
+    admin = create_admin
 
     sign_in_as(admin)
 
