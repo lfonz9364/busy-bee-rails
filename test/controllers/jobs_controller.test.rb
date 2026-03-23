@@ -118,4 +118,77 @@ class JobsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to root_url
   end
+
+  test "client cannot view another client's job" do
+    client = create_client
+    other_client = create_client
+    job = create_job(client: client, developer: nil, status: "open")
+
+    sign_in_as(other_client.user)
+
+    get job_url(job)
+
+    assert_redirected_to my_posted_jobs_url
+  end
+
+  test "client can view own job" do
+    client = create_client
+    job = create_job(client: client, developer: nil, status: "open")
+
+    sign_in_as(client.user)
+
+    get job_url(job)
+
+    assert_response :success
+  end
+
+  test "developer can view client job" do
+    client = create_client
+    developer = create_developer
+    job = create_job(client: client, developer: nil, status: "open")
+
+    sign_in_as(developer.user)
+
+    get job_url(job)
+
+    assert_response :success
+  end
+
+  test "client cannot edit another client's job" do
+    client = create_client
+    other_client = create_client
+    job = create_job(client: client, developer: nil, status: "open")
+
+    sign_in_as(other_client.user)
+
+    get edit_job_url(job)
+
+    assert_redirected_to my_posted_jobs_url
+  end
+
+  test "client cannot complete another client's job" do
+    client = create_client
+    other_client = create_client
+    developer = create_developer
+    job = create_job(client: client, developer: developer, status: "in_progress")
+
+    sign_in_as(other_client.user)
+
+    patch complete_job_url(job)
+
+    assert_redirected_to my_posted_jobs_url
+    assert_equal "in_progress", job.reload.status
+  end
+
+  test "admin can view any job" do
+    client = create_client
+    admin = create_user(admin: true)
+    job = create_job(client: client, developer: nil, status: "open")
+
+    sign_in_as(admin)
+
+    get job_url(job)
+
+    assert_response :success
+  end
 end

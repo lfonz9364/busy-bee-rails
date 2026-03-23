@@ -20,6 +20,10 @@ class Job < ApplicationRecord
     developer.present?
   end
 
+  def owned_by_client?(user)
+    user&.client.present? && client == user.client
+  end
+
   def editable_by_client?(user)
     return false unless user&.client.present?
 

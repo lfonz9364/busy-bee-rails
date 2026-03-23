@@ -1,7 +1,9 @@
 class JobsController < ApplicationController
   before_action :require_login
   before_action :set_job, only: %i[show edit update destroy complete]
+
   before_action :require_client, only: %i[new create edit update destroy complete]
+  before_action :authorise_client_job_show!, only: %i[show]
   before_action :authorise_client_job_edit!, only: %i[edit update destroy]
   before_action :authorise_client_job_completion!, only: %i[complete]
 
@@ -55,7 +57,7 @@ class JobsController < ApplicationController
 
   def destroy
     @job.destroy
-    redirect_to jobs_path, notice: "Job deleted succesfully"
+    redirect_to my_posted_jobs_path, notice: "Job deleted succesfully"
   end
 
   def complete
@@ -69,16 +71,25 @@ class JobsController < ApplicationController
     @job = Job.find(params[:id])
   end
 
+  def authorise_client_job_show!
+    return if current_user.admin?
+    
+    return unless current_user.client?
+    return if @job.owned_by_client?(current_user)
+
+    redirect_to my_posted_jobs_path, alert: "You are not allowed to view another client's job."
+  end
+
   def authorise_client_job_edit!
     return if @job&.editable_by_client?(current_user)
 
-    redirect_to @job, alert: "You are not allowed to modify a job if you are not the client or it is taken by a developer"
+    redirect_to my_posted_jobs_path, alert: "You are not allowed to modify a job if you are not the client or it is taken by a developer"
   end
 
   def authorise_client_job_completion!
     return if @job.completable_by_client?(current_user)
 
-    redirect_to @job, alert: "You are not allowed to complete this job"
+    redirect_to my_posted_jobs_path, alert: "You are not allowed to complete this job"
   end
 
   def job_params
