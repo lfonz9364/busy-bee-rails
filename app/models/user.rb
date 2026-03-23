@@ -25,4 +25,12 @@ class User < ActiveRecord::Base
   validates :email, uniqueness: true
   
   validates :role, inclusion: { in: %w[client developer] }, allow_nil: true
+
+  def client?
+    client.present?
+  end
+
+  def developer?
+    developer.present?
+  end
 end
