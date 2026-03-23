@@ -87,4 +87,35 @@ class JobsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "a[href='#{new_job_feedback_path(job)}']", text: "Write feedback"
   end
+
+  test "client can view my posted jobs page" do
+    client = create_client
+    developer = create_developer
+
+    open_job = create_job(client: client, developer: nil, status: "open")
+    in_progress_job = create_job(client: client, developer: developer, status: "in_progress")
+    completed_job = create_job(client: client, developer: developer, status: "completed")
+    cancelled_job = create_job(client: client, developer: nil, status: "cancelled")
+
+    sign_in_as(client.user)
+
+    get my_posted_jobs_url
+
+    assert_response :success
+    assert_match "My Posted Jobs", @response.body
+    assert_match open_job.title, @response.body
+    assert_match in_progress_job.title, @response.body
+    assert_match completed_job.title, @response.body
+    assert_match cancelled_job.title, @response.body
+  end
+
+  test "non client cannot view my posted jobs page" do
+    developer = create_developer
+
+    sign_in_as(developer.user)
+
+    get my_posted_jobs_url
+
+    assert_redirected_to root_url
+  end
 end

@@ -14,6 +14,15 @@ class JobsController < ApplicationController
     end
   end
 
+  def mine
+    client = current_user.client
+
+    @open_jobs = client.open_jobs
+    @in_progress_jobs = client.in_progress_jobs
+    @completed_jobs = client.completed_jobs
+    @cancelled_jobs = client.cancelled_jobs
+  end
+
   def show
     @feedbacks = @job.feedbacks.includes(:client).order(created_at: :desc)
     @client_feedback = current_user&.client == @job.client ? @job.feedbacks.find_by(user: current_user, role: "client") : nil

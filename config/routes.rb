@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   root "sessions#new"
 
   get "/my-application",    to: "job_applications#mine", as: :my_applications
+  get "/my-posted-jobs",    to: "jobs#mine",             as: :my_posted_jobs
+
   get  "/signup",           to: "registrations#new"
   post "/signup",           to: "registrations#create"
 

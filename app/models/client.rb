@@ -21,6 +21,23 @@ class Client < ApplicationRecord
 
   after_create :assign_user_role
 
+  def open_jobs
+    jobs.includes(developer: :user).where(status: "open").order(created_at: :desc)
+  end
+
+
+  def in_progress_jobs
+    jobs.includes(developer: :user).where(status: "in_progress").order(updated_at: :desc)
+  end
+
+  def completed_jobs
+    jobs.includes(developer: :user).where(status: "completed").order(updated_at: :desc)
+  end
+
+  def cancelled_jobs
+    jobs.includes(developer: :user).where(status: "cancelled").order(updated_at: :desc)
+  end
+  
   private
 
   def assign_user_role
