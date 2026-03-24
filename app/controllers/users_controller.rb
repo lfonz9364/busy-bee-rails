@@ -1,10 +1,8 @@
 class UsersController < ApplicationController
   before_action :require_login
-  before_action :set_user, only: %i[show edit update]
+  before_action :set_user, only: %i[show edit update make_admin]
+  before_action :authorise_user_access!, only: %i[show edit update]
   before_action :require_admin, only: %i[index make_admin]
-  before_action only: %i[show edit update] do
-    require_admin_or_self(@user)
-  end
 
   def index
     @users = User.order(created_at: :desc)
@@ -17,9 +15,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    permitted = current_user.admin? ? admin_user_params : user_params
-
-    if @user.update(permitted)
+    if @user.update(user_params)
       redirect_to @user, notice: "Profile updated successfully."
     else
       render :edit, status: :unprocessable_entity
@@ -27,9 +23,18 @@ class UsersController < ApplicationController
   end
 
   def make_admin
-    user = User.find(params[:id])
-    user.update(admin: true)
-    redirect_to users_path, notice: "Admin role assigned successfully."
+    if @user == current_user
+      redirect_to users_path, alert: "You are already managing your own access."
+      return
+    end
+
+    if @user.admin?
+      redirect_to users_path, alert: "#{@user.name} is already an admin"
+      return
+    end
+
+    @user.update(admin: true)
+    redirect_to users_path, notice: "#{@user.name} Admin role assigned successfully."
   end
 
   private
@@ -38,11 +43,23 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
-  def user_params
-    params.require(:user).permit(:name, :email, :address, :suburb, :state, :postcode, :country, :contact_person)
+  def authorise_user_access!
+    return if current_user&.admin?
+    return if current_user == @user
+
+    redirect_to root_path, alert: "You are not authorised to access this profile."
   end
 
-  def admin_user_params
-    params.require(:user).permit(:name, :email, :address, :suburb, :state, :postcode, :country, :contact_person, :admin)
+  def user_params
+    params.require(:user).permit(
+      :name, 
+      :email, 
+      :address, 
+      :suburb, 
+      :state, 
+      :postcode, 
+      :country, 
+      :contact_person
+    )
   end
 end

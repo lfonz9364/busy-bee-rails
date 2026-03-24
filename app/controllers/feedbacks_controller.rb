@@ -18,23 +18,32 @@ class FeedbacksController < ApplicationController
 
   def new
     @job = Job.find(params[:job_id])
+
+    unless feedback_allowed_for_job?(@job)
+      redirect_to @job, alert: "Feedback can only be created after the job is completed"
+      return
+    end
+
     @feedback = @job.feedbacks.build
   end
 
   def create
     @job = Job.find(params[:job_id])
+
+    unless feedback_allowed_for_job?(@job)
+      redirect_to @job, alert: "Feedback can olny be created after the job is completed"
+      return  
+    end
+
     @feedback = @job.feedbacks.build(feedback_params)
     @feedback.user = current_user
     @feedback.role = "client"
 
-    if @feedback.editable_by_client?(current_user) || within_feedback_window_for_new?(@job)
-      if @feedback.save
+    if (@feedback.editable_by_client?(current_user) || within_feedback_window_for_new?(@job)) && @feedback.save
         redirect_to @job, notice: "Feedback created successfully."
-      else
-        render :new, status: :unprocessable_entity
-      end
     else
       redirect_to @job, alert: "Feedback can only be created within 30 days after the job deadline."
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -50,8 +59,9 @@ class FeedbacksController < ApplicationController
   end
 
   def destroy
+    job = @feedback.job
     @feedback.destroy
-    redirect_to @feedback.job, notice: "Feedback deleted successfully."
+    redirect_to job, notice: "Feedback deleted successfully."
   end
 
   private
@@ -68,6 +78,10 @@ class FeedbacksController < ApplicationController
 
   def within_feedback_window_for_new?(job)
     current_user.client == job.client && Time.current <= (job.deadline + 30.days)
+  end
+
+  def feedback_allowed_for_job?(job)
+    current_user.client == job.client && job.feedback_allowed?
   end
 
   def feedback_params

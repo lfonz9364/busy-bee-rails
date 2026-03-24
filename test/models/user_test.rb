@@ -13,6 +13,7 @@ class UserTest < ActiveSupport::TestCase
       contact_person: "Test Contact",
       abn: "123456789",
       password: "password",
+      role: 'client',
       password_confirmation: "password"
     )
     assert user.valid?
@@ -29,10 +30,11 @@ class UserTest < ActiveSupport::TestCase
     assert_includes user.errors[:country], "can't be blank"
     assert_includes user.errors[:contact_person], "can't be blank"
     assert_includes user.errors[:abn], "can't be blank"
+    assert_includes user.errors[:role], "is not included in the list"
   end
 
   test "email must be unique" do
-    User.create!(
+    create_user(
       name: "Existing User",
       email: "test@example.com",
       address: "123 Test St",
@@ -56,9 +58,37 @@ class UserTest < ActiveSupport::TestCase
       contact_person: "Test Contact",
       abn: "987654321",
       password: "password",
+      role:"developer",
       password_confirmation: "password"
     )
     assert_not user.valid?
     assert_includes user.errors[:email], "has already been taken"
+  end
+
+  test "generate_password_reset_token! sets token and timestamp" do
+    user = create_user
+
+    user.generate_password_reset_token!
+
+    assert user.reload.reset_password_token.present?
+    assert user.reset_password_sent_at.present?
+  end
+
+  test "password_reset_expired? returns true when token is older than 2 hours" do
+    user = create_user(
+      reset_password_token: "token123",
+      reset_password_sent_at: 3.hours.ago
+    )
+
+    assert user.password_reset_expired?
+  end
+
+  test "password_reset_expired? returns false when token is recent" do
+    user = create_user(
+      reset_password_token: "token123",
+      reset_password_sent_at: 30.minutes.ago
+    )
+
+    assert_not user.password_reset_expired?
   end
 end

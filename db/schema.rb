@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_03_16_111541) do
+ActiveRecord::Schema[7.2].define(version: 2026_03_23_235917) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -43,6 +43,20 @@ ActiveRecord::Schema[7.2].define(version: 2026_03_16_111541) do
     t.index ["user_id"], name: "index_feedbacks_on_user_id"
   end
 
+  create_table "job_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "job_id", null: false
+    t.uuid "developer_id", null: false
+    t.string "status", default: "pending", null: false
+    t.text "message"
+    t.datetime "reviewed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["developer_id"], name: "index_job_applications_on_developer_id"
+    t.index ["job_id", "developer_id"], name: "index_job_applications_on_job_id_and_developer_id", unique: true
+    t.index ["job_id"], name: "index_job_applications_on_job_id"
+    t.index ["status"], name: "index_job_applications_on_status"
+  end
+
   create_table "jobs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "client_id", null: false
     t.uuid "developer_id"
@@ -73,7 +87,10 @@ ActiveRecord::Schema[7.2].define(version: 2026_03_16_111541) do
     t.boolean "admin", default: false, null: false
     t.string "state"
     t.string "role", default: "-", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["role"], name: "index_users_on_role"
   end
 
@@ -81,6 +98,8 @@ ActiveRecord::Schema[7.2].define(version: 2026_03_16_111541) do
   add_foreign_key "developers", "users"
   add_foreign_key "feedbacks", "jobs"
   add_foreign_key "feedbacks", "users"
+  add_foreign_key "job_applications", "developers"
+  add_foreign_key "job_applications", "jobs"
   add_foreign_key "jobs", "clients"
   add_foreign_key "jobs", "developers"
 end

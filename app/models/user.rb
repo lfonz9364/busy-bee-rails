@@ -25,4 +25,32 @@ class User < ActiveRecord::Base
   validates :email, uniqueness: true
   
   validates :role, inclusion: { in: %w[client developer] }, allow_nil: true
+
+  def client?
+    client.present?
+  end
+
+  def developer?
+    developer.present?
+  end
+
+  def generate_password_reset_token!
+    update!(
+      reset_password_token: SecureRandom.urlsafe_base64(32),
+      reset_password_sent_at: Time.current
+    )
+  end
+
+  def clear_password_reset_token!
+    update!(
+      reset_password_token: nil,
+      reset_password_sent_at: nil
+    )
+  end
+
+  def password_reset_expired?
+    return true if reset_password_sent_at.blank?
+
+    reset_password_sent_at < 2.hours.ago
+  end
 end

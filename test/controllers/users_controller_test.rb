@@ -17,8 +17,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "allows index when logged in as admin" do
-    admin = create_user(admin: true)
-    create_user
+    admin = create_admin
 
     sign_in_as(admin)
 
@@ -64,5 +63,29 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     get user_url(user)
 
     assert_response :success
+  end
+
+  test "admin can make another user admin" do
+    admin = create_user(admin: true)
+    user = create_user(admin: false)
+
+    sign_in_as(admin)
+
+    patch make_admin_user_url(user)
+
+    assert_redirected_to users_path
+    assert user.reload.admin?
+  end
+
+  test "non admin cannot make another user admin" do
+    user = create_user(admin: false)
+    other_user = create_user(admin: false)
+
+    sign_in_as(user)
+
+    patch make_admin_user_url(other_user)
+
+    assert_redirected_to root_path
+    assert_not other_user.reload.admin?
   end
 end

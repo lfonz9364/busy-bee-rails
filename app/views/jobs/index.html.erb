@@ -1,66 +1,83 @@
 <div class="mb-8 rounded-2xl border border-white/60 bg-white/80 p-6 shadow-lg backdrop-blur">
-  <h1 class="text-3xl font-bold tracking-tight text-slate-900">Jobs</h1>
-  <p class="mt-1 text-sm text-slate-600">
-    Open opportunities posted by clients.
-  </p>
+	<h1 class="text-3xl font-bold tracking-tight text-busybee-900">Jobs</h1>
+	<p class="mt-1 text-sm text-busybee-600">
+		Open opportunities posted by clients.
+	</p>
+
+	<% if logged_in? && current_user.client.present? %>
+		<div class="justify-self-end">
+			<%= link_to "My Posted Jobs", 
+        my_posted_jobs_path,
+        class: "rounded-md bg-busybee-500 px-4 py-2 text-sm font-medium text-white hover:bg-busybee-600 mt-6 items-center inline-block" %>
+			<%= link_to "+ Post Job", 
+        new_job_path,
+        class: "rounded-md bg-busybee-500 px-4 py-2 text-sm font-medium text-white hover:bg-busybee-600 mt-6 ml-4 items-center inline-block" %>
+		</div>
+	<% end %>
+
+	<% if logged_in? && current_user.developer.present? %>
+		<%= link_to "My Applications", 
+        my_applications_path, 
+        class: "rounded-md bg-busybee-500 px-4 py-2 text-sm font-medium text-white hover:bg-busybee-600 mt-6 flex items-center justify-self-end" %>
+	<% end %>
 </div>
 
 <% if @jobs.any? %>
-  <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-    <% @jobs.each do |job| %>
-      <%= link_to job_path(job),
+	<div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+		<% @jobs.each do |job| %>
+			<%= link_to job_path(job),
           class: "group block rounded-2xl border border-white/60 bg-white/88 p-6 shadow-xl backdrop-blur transition hover:-translate-y-1 hover:shadow-2xl" do %>
 
-        <article>
-          <div class="flex items-start justify-between gap-3">
-            <div>
-              <h2 class="text-xl font-semibold text-slate-900 group-hover:text-busybee-700">
-                <%= job.title %>
-              </h2>
+				<article>
+					<div class="flex items-start justify-between gap-3">
+						<div>
+							<h2 class="text-xl font-semibold text-busybee-900 group-hover:text-busybee-700">
+								<%= job.title %>
+							</h2>
 
-              <p class="mt-1 text-sm text-slate-500">
-                Client: <%= job.client.name %>
-              </p>
-            </div>
+							<p class="mt-1 text-sm text-busybee-500">
+								Client: <%= job.client.name %>
+							</p>
+						</div>
 
-            <span class="rounded-full border border-busybee-200 bg-busybee-50 px-3 py-1 text-xs font-semibold text-busybee-700">
-              <%= job.status.humanize %>
-            </span>
-          </div>
+						<span class="rounded-full border border-busybee-200 bg-busybee-50 px-3 py-1 text-xs font-semibold text-busybee-700">
+							<%= job.status.humanize %>
+						</span>
+					</div>
 
-          <div class="mt-4">
-            <p class="text-sm leading-6 text-slate-700">
-              <%= truncate(job.description, length: 120) %>
-            </p>
-          </div>
+					<div class="mt-4">
+						<p class="text-sm leading-6 text-busybee-700">
+							<%= truncate(job.description, length: 120) %>
+						</p>
+					</div>
 
-          <div class="mt-5 space-y-1 text-sm text-slate-500">
-            <p>
-              <span class="font-medium text-slate-700">Developer:</span>
-              <%= job.developer&.name || "Unassigned" %>
-            </p>
-            <p>
-              <span class="font-medium text-slate-700">Reward:</span>
-              $<%= job.reward %>
-            </p>
-            <p>
-              <span class="font-medium text-slate-700">Deadline:</span>
-              <%= l(job.deadline, format: :long) rescue job.deadline %>
-            </p>
-          </div>
+					<div class="mt-5 space-y-1 text-sm text-busybee-500">
+						<p>
+							<span class="font-medium text-busybee-700">Developer:</span>
+							<%= job.developer&.name || "Unassigned" %>
+						</p>
+						<p>
+							<span class="font-medium text-busybee-700">Reward:</span>
+							$<%= job.reward %>
+						</p>
+						<p>
+							<span class="font-medium text-busybee-700">Deadline:</span>
+							<%= l(job.deadline, format: :long) rescue job.deadline %>
+						</p>
+					</div>
 
-          <div class="mt-6 flex items-center justify-end">
-            <span class="text-sm font-medium text-busybee-600 group-hover:underline">
-              View job →
-            </span>
-          </div>
-        </article>
+					<div class="mt-6 flex items-center justify-end">
+						<span class="text-sm font-medium text-busybee-600 group-hover:underline">
+							View job →
+						</span>
+					</div>
+				</article>
 
-      <% end %>
-    <% end %>
-  </div>
+			<% end %>
+		<% end %>
+	</div>
 <% else %>
-  <div class="rounded-2xl border border-white/60 bg-white/88 p-6 text-sm text-slate-500 shadow-xl backdrop-blur">
-    No jobs found.
-  </div>
+	<div class="rounded-2xl border border-white/60 bg-white/88 p-6 text-sm text-busybee-500 shadow-xl backdrop-blur">
+		No jobs found.
+	</div>
 <% end %>

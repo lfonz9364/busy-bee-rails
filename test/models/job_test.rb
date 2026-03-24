@@ -31,4 +31,63 @@ class JobTest < ActiveSupport::TestCase
     assert job.persisted?
   end
 
+  test "open_for_applications? is true when open and not taken" do
+    client = create_client
+    job = create_job(client: client, developer: nil, status: "open")
+
+    assert job.open_for_applications?
+  end
+
+  test "open_for_applications? is false when taken" do
+    client = create_client
+    developer = create_developer
+    job = create_job(client: client, developer: developer, status: "open")
+
+    assert_not job.open_for_applications?
+  end
+
+  test "open_for_applications? is false when not open" do
+    client = create_client
+    job = create_job(client: client, developer: nil, status: "in_progress")
+
+    assert_not job.open_for_applications?
+  end
+
+  test "client owner can complete in progress job" do
+    client = create_client
+    developer = create_developer
+    job = create_job(client: client, developer: developer, status: "in_progress")
+
+    assert job.completable_by_client?(client.user)
+  end
+
+  test "non owner client cannot complete job" do
+    client = create_client
+    other_client = create_client
+    developer = create_developer
+    job = create_job(client: client, developer: developer, status: "in_progress")
+
+    assert_not job.completable_by_client?(other_client.user)
+  end
+
+  test "mark_completed! changes status to completed" do
+    client = create_client
+    developer = create_developer
+    job = create_job(client: client, developer: developer, status: "in_progress")
+
+    job.mark_completed!
+
+    assert_equal "completed", job.reload.status
+  end
+
+  test "feedback_allowed? is true only when job is completed" do
+    client = create_client
+    developer = create_developer
+
+    completed_job = create_job(client: client, developer: developer, status: "completed")
+    in_progress_job = create_job(client: client, developer: developer, status: "in_progress")
+
+    assert completed_job.feedback_allowed?
+    assert_not in_progress_job.feedback_allowed?
+  end
 end

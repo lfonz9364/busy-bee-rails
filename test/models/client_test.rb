@@ -34,4 +34,49 @@ class ClientTest < ActiveSupport::TestCase
     assert_equal 1, authored.count
     assert_equal "Good job", authored.first.comment
   end
+
+  test "client groups open jobs correctly" do
+    client = create_client
+    other_client = create_client
+
+    open_job = create_job(client: client, developer: nil, status: "open")
+    create_job(client: client, developer: nil, status: "completed")
+    create_job(client: other_client, developer: nil, status: "open")
+
+    assert_includes client.open_jobs, open_job
+    assert_equal 1, client.open_jobs.count
+  end
+
+  test "client groups in progress jobs correctly" do
+    client = create_client
+    developer = create_developer
+
+    in_progress_job = create_job(client: client, developer: developer, status: "in_progress")
+    create_job(client: client, developer: developer, status: "completed")
+
+    assert_includes client.in_progress_jobs, in_progress_job
+    assert_equal 1, client.in_progress_jobs.count
+  end
+
+  test "client groups completed jobs correctly" do
+    client = create_client
+    developer = create_developer
+
+    completed_job = create_job(client: client, developer: developer, status: "completed")
+    create_job(client: client, developer: developer, status: "cancelled")
+
+    assert_includes client.completed_jobs, completed_job
+    assert_equal 1, client.completed_jobs.count
+  end
+
+  test "client groups cancelled jobs correctly" do
+    client = create_client
+    developer = create_developer
+
+    cancelled_job = create_job(client: client, developer: developer, status: "cancelled")
+    create_job(client: client, developer: developer, status: "open")
+
+    assert_includes client.cancelled_jobs, cancelled_job
+    assert_equal 1, client.cancelled_jobs.count
+  end
 end

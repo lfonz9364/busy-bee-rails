@@ -1,8 +1,11 @@
 class JobsController < ApplicationController
   before_action :require_login
-  before_action :set_job, only: %i[show edit update destroy]
-  before_action :require_client, only: %i[new create edit update destroy]
+  before_action :set_job, only: %i[show edit update destroy complete]
+
+  before_action :require_client, only: %i[new create edit update destroy complete]
+  before_action :authorise_client_job_show!, only: %i[show]
   before_action :authorise_client_job_edit!, only: %i[edit update destroy]
+  before_action :authorise_client_job_completion!, only: %i[complete]
 
   def index
     @jobs = Job.includes(developer: :user, client: :user).order(created_at: :desc)
@@ -13,8 +16,22 @@ class JobsController < ApplicationController
     end
   end
 
+  def mine
+    client = current_user.client
+
+    @open_jobs = client.open_jobs
+    @in_progress_jobs = client.in_progress_jobs
+    @completed_jobs = client.completed_jobs
+    @cancelled_jobs = client.cancelled_jobs
+  end
+
   def show
     @feedbacks = @job.feedbacks.includes(:client).order(created_at: :desc)
+    @client_feedback = current_user&.client == @job.client ? @job.feedbacks.find_by(user: current_user, role: "client") : nil
+  end
+
+  def new
+    @job = Job.new
   end
 
   def create
@@ -40,7 +57,12 @@ class JobsController < ApplicationController
 
   def destroy
     @job.destroy
-    redirect_to jobs_path, notice: "Job deleted succesfully"
+    redirect_to my_posted_jobs_path, notice: "Job deleted succesfully"
+  end
+
+  def complete
+    @job.mark_completed!
+    redirect_to @job, notice: "Job marked as completed"
   end
 
   private 
@@ -49,10 +71,25 @@ class JobsController < ApplicationController
     @job = Job.find(params[:id])
   end
 
+  def authorise_client_job_show!
+    return if current_user.admin?
+    
+    return unless current_user.client?
+    return if @job.owned_by_client?(current_user)
+
+    redirect_to my_posted_jobs_path, alert: "You are not allowed to view another client's job."
+  end
+
   def authorise_client_job_edit!
     return if @job&.editable_by_client?(current_user)
 
-    redirect_to @job, alert: "You are not allowed to modify a job if you are not the client or it is taken by a developer"
+    redirect_to my_posted_jobs_path, alert: "You are not allowed to modify a job if you are not the client or it is taken by a developer"
+  end
+
+  def authorise_client_job_completion!
+    return if @job.completable_by_client?(current_user)
+
+    redirect_to my_posted_jobs_path, alert: "You are not allowed to complete this job"
   end
 
   def job_params
