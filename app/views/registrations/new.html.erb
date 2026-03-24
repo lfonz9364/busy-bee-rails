@@ -20,6 +20,17 @@
 			</div>
 
 			<div>
+				<%= f.label :abn, class: "text-sm font-medium text-busybee-700" %>
+				<%= f.text_field :abn,
+              maxlength: 14,
+              inputmode: "numeric",
+              placeholder: "12 345 678 901", 
+              required: true,
+              data: { abn_format: true },
+              class: "mt-1 w-full rounded-md border border-busybee-300 px-3 py-2" %>
+			</div>
+
+			<div>
 				<%= f.label :password, class: "text-sm font-medium text-busybee-700" %>
 				<%= f.password_field :password, required: true,
               class: "mt-1 w-full rounded-md border border-busybee-300 px-3 py-2" %>
@@ -34,9 +45,17 @@
 			<div>
 				<%= f.label :role, "Register as", class: "text-sm font-medium text-busybee-700" %>
 				<%= f.select :role,
-              [["Client", "client"], ["Developer", "developer"]],
-              {},
-              class: "mt-1 w-full rounded-md border border-busybee-300 px-3 py-2" %>
+        [["Client", "client"], ["Developer", "developer"]],
+        {},
+        class: "mt-1 w-full rounded-md border border-busybee-300 px-3 py-2",
+        data: { role_toggle: true } %>
+			</div>
+
+			<div data-skillset-wrapper class="<%= @user.role == 'developer' ? '' : 'hidden' %>">
+				<%= f.label :skillset, class: "text-sm font-medium text-busybee-700" %>
+				<%= f.text_field :skillset,
+        class: "mt-1 w-full rounded-md border border-busybee-300 px-3 py-2",
+        placeholder: "e.g. Ruby on Rails, React, TypeScript" %>
 			</div>
 
 			<div>
@@ -72,9 +91,9 @@
 
 		<% end %>
 
-		<p class="mt-6 text-center text-sm text-busybee-500">
+		<p class="mt-6 text-center text-sm text-busybee-800">
 			Already have an account?
-			<%= link_to "Login", login_path, class: "text-busybee-600 hover:underline" %>
+			<%= link_to "Login", login_path, class: "text-busybee-700 hover:underline" %>
 		</p>
 
 	</div>

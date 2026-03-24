@@ -9,6 +9,7 @@
 
 		<% unless Rails.env.test? %>
 			<%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+			<%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
 		<% end %>
 	</head>
 
@@ -61,11 +62,6 @@
 							<%= button_to "Logout", logout_path,
                     method: :delete,
                     class: "rounded-md bg-busybee-500 px-4 py-2 text-white hover:bg-busybee-600" %>
-						<% else %>
-							<%= link_to "Login", login_path,
-                    class: "rounded-md bg-busybee-500 px-4 py-2 text-white hover:bg-busybee-600" %>
-							<%= link_to "Signup",signup_path,
-                    class: "rounded-md border border-busybee-500 px-4 py-2 text-busybee-600 hover:bg-busybee-50" %>
 						<% end %>
 					</div>
 				</div>

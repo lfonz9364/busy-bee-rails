@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_secure_password
+  before_validation :normalise_abn
 
   #  Roles
   has_one :developer, dependent: :destroy
@@ -18,13 +19,16 @@ class User < ActiveRecord::Base
             :state,
             :postcode,
             :country, 
-            :contact_person, 
-            :abn,             
+            :contact_person,         
             presence: true
 
   validates :email, uniqueness: true
   
-  validates :role, inclusion: { in: %w[client developer] }, allow_nil: true
+  validates :role, inclusion: { in: %w[client developer] }
+
+  validates :abn,
+            format: { with: /\A\d{11}\z/, message: "must be 11 digits" },
+            allow_blank: true
 
   def client?
     client.present?
@@ -52,5 +56,11 @@ class User < ActiveRecord::Base
     return true if reset_password_sent_at.blank?
 
     reset_password_sent_at < 2.hours.ago
+  end
+
+  private
+
+  def normalise_abn
+    self.abn = abn.to_s.gsub(/\D/, "")
   end
 end

@@ -4,15 +4,18 @@ class RegistrationsController < ApplicationController
   end
 
   def create
-    @user = User.new(registration_params)
+    @user = User.new(registration_params.except(:skillset))
 
     if @user.save
       create_role_record!(@user)
+
+      reset_session
       session[:user_id] = @user.id
       redirect_to root_path, notice: "Account created successfully."
     else
       render :new, status: :unprocessable_entity
     end
+
   end
 
   private
@@ -30,16 +33,17 @@ class RegistrationsController < ApplicationController
       :abn,
       :password,
       :password_confirmation,
-      :role
+      :role,
+      :skillset
     )
   end
 
   def create_role_record!(user)
     case user.role
-    when "client_role"
+    when "client"
       Client.create!(user: user)
-    when "developer_role"
-      Developer.create!(user: user, skillset: "")
+    when "developer"
+      Developer.create!(user: user, skillset: registration_params[:skillset])
     end
   end
 end

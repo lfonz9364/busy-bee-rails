@@ -11,7 +11,7 @@ class UserTest < ActiveSupport::TestCase
       postcode: "1234",
       country: "Testland",
       contact_person: "Test Contact",
-      abn: "123456789",
+      abn: "12345678901",
       password: "password",
       role: 'client',
       password_confirmation: "password"
@@ -29,7 +29,6 @@ class UserTest < ActiveSupport::TestCase
     assert_includes user.errors[:postcode], "can't be blank"
     assert_includes user.errors[:country], "can't be blank"
     assert_includes user.errors[:contact_person], "can't be blank"
-    assert_includes user.errors[:abn], "can't be blank"
     assert_includes user.errors[:role], "is not included in the list"
   end
 
@@ -43,7 +42,7 @@ class UserTest < ActiveSupport::TestCase
       postcode: "1234",
       country: "Testland",
       contact_person: "Test Contact",
-      abn: "123456789",
+      abn: "12345678901",
       password: "password",
       password_confirmation: "password"
     )
