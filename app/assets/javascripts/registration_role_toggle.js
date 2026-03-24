@@ -1,22 +1,35 @@
-$(document).on("turbo:load ready", () => {
-  const $roleSelect = $("[data-role-toggle='true']");
-  const $skillsetWrapper = $("[data-skillset-wrapper]");
-  const $skillsetInput = $skillsetWrapper.find("input");
+(function () {
+  function toggleSkillsetField() {
+    var roleSelect = document.querySelector("[data-role-toggle='true']");
+    var skillsetWrapper = document.querySelector("[data-skillset-wrapper]");
+    if (!roleSelect || !skillsetWrapper) return;
 
-  if ($roleSelect.length === 0 || $skillsetWrapper.length === 0) return;
+    var skillsetInput = skillsetWrapper.querySelector("input");
 
-  toggleSkillset();
-  $roleSelect.off("change.roleToggle").on("change.roleToggle", toggleSkillset);
-
-  function toggleSkillset() {
-    const role = $roleSelect.val();
-
-    if (role === "developer") {
-      $skillsetWrapper.removeClass("hidden");
-      $skillsetInput.attr("required", true);
+    if (roleSelect.value === "developer") {
+      skillsetWrapper.classList.remove("hidden");
+      if (skillsetInput) skillsetInput.setAttribute("required", "required");
     } else {
-      $skillsetWrapper.addClass("hidden");
-      $skillsetInput.removeAttr("required").val("");
+      skillsetWrapper.classList.add("hidden");
+      if (skillsetInput) {
+        skillsetInput.removeAttribute("required");
+        skillsetInput.value = "";
+      }
     }
   }
-});
+
+  function bindRoleToggle() {
+    var roleSelect = document.querySelector("[data-role-toggle='true']");
+    if (!roleSelect) return;
+
+    toggleSkillsetField();
+
+    if (roleSelect.dataset.roleToggleBound === "true") return;
+    roleSelect.dataset.roleToggleBound = "true";
+
+    roleSelect.addEventListener("change", toggleSkillsetField);
+  }
+
+  document.addEventListener("DOMContentLoaded", bindRoleToggle);
+  document.addEventListener("turbo:load", bindRoleToggle);
+})();
