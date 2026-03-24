@@ -44,11 +44,18 @@
 
 			<div>
 				<%= f.label :role, "Register as", class: "text-sm font-medium text-busybee-700" %>
-				<%= f.select :role,
-        [["Client", "client"], ["Developer", "developer"]],
-        {},
-        class: "mt-1 w-full rounded-md border border-busybee-300 px-3 py-2",
-        data: { role_toggle: true } %>
+				<div class="relative">
+					<%= f.select :role,
+              [["Client", "client"], ["Developer", "developer"]],
+              {},
+              class: "mt-1 w-full rounded-md border border-busybee-300 px-3 py-2 pr-10 appearance-none 
+                      bg-white focus:outline-none focus:ring-2 focus:ring-busybee-500 focus:border-busybee-500",
+              data: { role_toggle: true } %>
+
+					<div class="pointer-events-none absolute inset-y-0 right-4 top-1 flex items-center text-busybee-500 ">
+						▼
+					</div>
+				</div>
 			</div>
 
 			<div data-skillset-wrapper class="<%= @user.role == 'developer' ? '' : 'hidden' %>">
