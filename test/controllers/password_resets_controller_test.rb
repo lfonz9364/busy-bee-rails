@@ -1,10 +1,15 @@
 require "test_helper"
 
 class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
+  include ActiveJob::TestHelper
   test "can request password reset for existing user" do
     user = create_user
 
-    post forgot_password_url, params: { email: user.email }
+    assert_emails 1 do
+      perform_enqueued_jobs do
+        post forgot_password_url, params: { email: user.email }
+      end
+    end
 
     assert_redirected_to login_url
     assert user.reload.reset_password_token.present?
