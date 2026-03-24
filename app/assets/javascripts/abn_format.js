@@ -1,15 +1,9 @@
-$(document).on("ready turbolinks:load turbo:load", () => {
-  const $abn = $("[data-abn-format='true']");
-  if ($abn.length === 0) return;
+(function () {
+  function formatABNInput(input) {
+    if (!input) return;
 
-  formatABN();
-  $abn.off("input.abn").on("input.abn", formatABN);
-
-  function formatABN() {
-    let value = $abn.val() || "";
-
-    value = value.replace(/\D/g, "");
-    value = value.slice(0, 11);
+    let value = input.value || "";
+    value = value.replace(/\D/g, "").slice(0, 11);
 
     if (value.length > 8) {
       value =
@@ -27,6 +21,23 @@ $(document).on("ready turbolinks:load turbo:load", () => {
       value = value.slice(0, 2) + " " + value.slice(2);
     }
 
-    $abn.val(value);
+    input.value = value;
   }
-});
+
+  function bindABNFormatting() {
+    var input = document.querySelector("[data-abn-format='true']");
+    if (!input) return;
+
+    formatABNInput(input);
+
+    if (input.dataset.abnBound === "true") return;
+    input.dataset.abnBound = "true";
+
+    input.addEventListener("input", function () {
+      formatABNInput(input);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", bindABNFormatting);
+  document.addEventListener("turbo:load", bindABNFormatting);
+})();
