@@ -4,11 +4,13 @@
 		<title>Busy Bee</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1">
 
+		<%= favicon_link_tag "favicon.ico" %>
 		<%= csrf_meta_tags %>
 		<%= csp_meta_tag %>
 
 		<% unless Rails.env.test? %>
 			<%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+			<%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
 		<% end %>
 	</head>
 
@@ -23,7 +25,7 @@
 		<div class="fixed inset-0 -z-10 bg-white/75 backdrop-blur-[1px]"></div>
 
 		<% unless controller_name == "sessions" && action_name == "new" || !logged_in? %>
-			<header class="border-b border-slate-200/80 bg-white/85 backdrop-blur">
+			<header class="border-b border-busybee-200/80 bg-white/85 backdrop-blur">
 				<div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
 					<div class="flex items-center gap-6">
 						<%= link_to root_path, class: "text-xl font-bold tracking-tight text-busybee-600" do %>
@@ -61,11 +63,6 @@
 							<%= button_to "Logout", logout_path,
                     method: :delete,
                     class: "rounded-md bg-busybee-500 px-4 py-2 text-white hover:bg-busybee-600" %>
-						<% else %>
-							<%= link_to "Login", login_path,
-                    class: "rounded-md bg-busybee-500 px-4 py-2 text-white hover:bg-busybee-600" %>
-							<%= link_to "Signup",signup_path,
-                    class: "rounded-md border border-busybee-500 px-4 py-2 text-busybee-600 hover:bg-busybee-50" %>
 						<% end %>
 					</div>
 				</div>

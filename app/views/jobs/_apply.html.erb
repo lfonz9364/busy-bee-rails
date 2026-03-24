@@ -2,20 +2,20 @@
 	<% existing_application = @job.job_applications.find_by(developer: current_user.developer) %>
 
 	<div class="mt-6 rounded-2xl border border-white/60 bg-white/88 p-6 shadow-xl backdrop-blur">
-		<h2 class="text-xl font-semibold text-slate-900">Apply for this job</h2>
+		<h2 class="text-xl font-semibold text-busybee-900">Apply for this job</h2>
 
 		<% if existing_application.present? %>
-			<p class="mt-3 text-sm text-slate-600">
+			<p class="mt-3 text-sm text-busybee-600">
 				You already applied.
 				<span class="font-semibold text-busybee-700"><%= existing_application.status.humanize %></span>
 			</p>
 		<% else %>
 			<%= form_with url: job_job_applications_path(@job), scope: :job_application, local: true, class: "mt-4 space-y-4" do |f| %>
 				<div>
-					<%= f.label :message, "Application message", class: "mb-1 block text-sm font-medium text-slate-700" %>
+					<%= f.label :message, "Application message", class: "mb-1 block text-sm font-medium text-busybee-700" %>
 					<%= f.text_area :message,
                 rows: 4,
-                class: "block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-busybee-500 focus:outline-none focus:ring-1 focus:ring-busybee-500" %>
+                class: "block w-full rounded-md border border-busybee-300 px-3 py-2 text-sm shadow-sm focus:border-busybee-500 focus:outline-none focus:ring-1 focus:ring-busybee-500" %>
 				</div>
 
 				<%= f.submit "Apply now",

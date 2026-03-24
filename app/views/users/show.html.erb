@@ -7,10 +7,10 @@
 				</div>
 
 				<div>
-					<h1 class="text-2xl font-bold tracking-tight text-slate-900">
+					<h1 class="text-2xl font-bold tracking-tight text-busybee-900">
 						<%= @user.name %>
 					</h1>
-					<p class="mt-1 text-sm text-slate-500">
+					<p class="mt-1 text-sm text-busybee-500">
 						<%= @user.email %>
 					</p>
 
@@ -43,51 +43,51 @@
 	<section class="lg:col-span-2 space-y-6">
 		<div class="rounded-2xl border border-white/60 bg-white/88 p-6 shadow-xl backdrop-blur">
 			<div class="mb-5">
-				<h2 class="text-xl font-semibold text-slate-900">Profile details</h2>
-				<p class="mt-1 text-sm text-slate-500">
+				<h2 class="text-xl font-semibold text-busybee-900">Profile details</h2>
+				<p class="mt-1 text-sm text-busybee-500">
 					Personal and contact information.
 				</p>
 			</div>
 
 			<dl class="grid grid-cols-1 gap-5 sm:grid-cols-2">
 				<div>
-					<dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Contact person</dt>
-					<dd class="mt-1 text-sm text-slate-700"><%= @user.contact_person.presence || "-" %></dd>
+					<dt class="text-xs font-semibold uppercase tracking-wide text-busybee-400">Contact person</dt>
+					<dd class="mt-1 text-sm text-busybee-700"><%= @user.contact_person.presence || "-" %></dd>
 				</div>
 
 				<div>
-					<dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">ABN</dt>
-					<dd class="mt-1 text-sm text-slate-700"><%= @user.abn.presence || "-" %></dd>
+					<dt class="text-xs font-semibold uppercase tracking-wide text-busybee-400">ABN</dt>
+					<dd class="mt-1 text-sm text-busybee-700"><%= @user.abn.presence || "-" %></dd>
 				</div>
 
 				<div>
-					<dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Address</dt>
-					<dd class="mt-1 text-sm text-slate-700"><%= @user.address.presence || "-" %></dd>
+					<dt class="text-xs font-semibold uppercase tracking-wide text-busybee-400">Address</dt>
+					<dd class="mt-1 text-sm text-busybee-700"><%= @user.address.presence || "-" %></dd>
 				</div>
 
 				<div>
-					<dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Suburb</dt>
-					<dd class="mt-1 text-sm text-slate-700"><%= @user.suburb.presence || "-" %></dd>
+					<dt class="text-xs font-semibold uppercase tracking-wide text-busybee-400">Suburb</dt>
+					<dd class="mt-1 text-sm text-busybee-700"><%= @user.suburb.presence || "-" %></dd>
 				</div>
 
 				<div>
-					<dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">State</dt>
-					<dd class="mt-1 text-sm text-slate-700"><%= @user.state.presence || "-" %></dd>
+					<dt class="text-xs font-semibold uppercase tracking-wide text-busybee-400">State</dt>
+					<dd class="mt-1 text-sm text-busybee-700"><%= @user.state.presence || "-" %></dd>
 				</div>
 
 				<div>
-					<dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Postcode</dt>
-					<dd class="mt-1 text-sm text-slate-700"><%= @user.postcode.presence || "-" %></dd>
+					<dt class="text-xs font-semibold uppercase tracking-wide text-busybee-400">Postcode</dt>
+					<dd class="mt-1 text-sm text-busybee-700"><%= @user.postcode.presence || "-" %></dd>
 				</div>
 
 				<div>
-					<dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Country</dt>
-					<dd class="mt-1 text-sm text-slate-700"><%= @user.country.presence || "-" %></dd>
+					<dt class="text-xs font-semibold uppercase tracking-wide text-busybee-400">Country</dt>
+					<dd class="mt-1 text-sm text-busybee-700"><%= @user.country.presence || "-" %></dd>
 				</div>
 
 				<div>
-					<dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Account created</dt>
-					<dd class="mt-1 text-sm text-slate-700">
+					<dt class="text-xs font-semibold uppercase tracking-wide text-busybee-400">Account created</dt>
+					<dd class="mt-1 text-sm text-busybee-700">
 						<%= l(@user.created_at, format: :long) rescue @user.created_at %>
 					</dd>
 				</div>
@@ -96,30 +96,30 @@
 
 		<div class="rounded-2xl border border-white/60 bg-white/88 p-6 shadow-xl backdrop-blur">
 			<div class="mb-5">
-				<h2 class="text-xl font-semibold text-slate-900">Account summary</h2>
-				<p class="mt-1 text-sm text-slate-500">
+				<h2 class="text-xl font-semibold text-busybee-900">Account summary</h2>
+				<p class="mt-1 text-sm text-busybee-500">
 					A quick overview of this user’s marketplace presence.
 				</p>
 			</div>
 
 			<div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-				<div class="rounded-xl border border-slate-200/80 bg-white/80 p-4 shadow-sm">
-					<p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Client profile</p>
-					<p class="mt-2 text-sm font-medium text-slate-700">
+				<div class="rounded-xl border border-busybee-200/80 bg-white/80 p-4 shadow-sm">
+					<p class="text-xs font-semibold uppercase tracking-wide text-busybee-400">Client profile</p>
+					<p class="mt-2 text-sm font-medium text-busybee-700">
 						<%= @user.client.present? ? "Active" : "Not created" %>
 					</p>
 				</div>
 
-				<div class="rounded-xl border border-slate-200/80 bg-white/80 p-4 shadow-sm">
-					<p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Developer profile</p>
-					<p class="mt-2 text-sm font-medium text-slate-700">
+				<div class="rounded-xl border border-busybee-200/80 bg-white/80 p-4 shadow-sm">
+					<p class="text-xs font-semibold uppercase tracking-wide text-busybee-400">Developer profile</p>
+					<p class="mt-2 text-sm font-medium text-busybee-700">
 						<%= @user.developer.present? ? "Active" : "Not created" %>
 					</p>
 				</div>
 
-				<div class="rounded-xl border border-slate-200/80 bg-white/80 p-4 shadow-sm">
-					<p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Admin access</p>
-					<p class="mt-2 text-sm font-medium text-slate-700">
+				<div class="rounded-xl border border-busybee-200/80 bg-white/80 p-4 shadow-sm">
+					<p class="text-xs font-semibold uppercase tracking-wide text-busybee-400">Admin access</p>
+					<p class="mt-2 text-sm font-medium text-busybee-700">
 						<%= @user.admin? ? "Granted" : "Standard user" %>
 					</p>
 				</div>
@@ -130,13 +130,13 @@
 					<% if @user.client.present? %>
 						<%= link_to "View client profile",
                   client_path(@user.client),
-                  class: "inline-flex items-center rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50" %>
+                  class: "inline-flex items-center rounded-md border border-busybee-300 bg-white px-4 py-2 text-sm font-medium text-busybee-700 hover:bg-busybee-50" %>
 					<% end %>
 
 					<% if @user.developer.present? %>
 						<%= link_to "View developer profile",
                   developer_path(@user.developer),
-                  class: "inline-flex items-center rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50" %>
+                  class: "inline-flex items-center rounded-md border border-busybee-300 bg-white px-4 py-2 text-sm font-medium text-busybee-700 hover:bg-busybee-50" %>
 					<% end %>
 				</div>
 			<% end %>
