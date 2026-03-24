@@ -1,81 +1,81 @@
 <div class="flex min-h-[70vh] items-center justify-center">
-  <div class="w-full max-w-lg rounded-2xl border border-white/60 bg-white/90 p-8 shadow-2xl backdrop-blur">
+	<div class="w-full max-w-lg rounded-2xl border border-white/60 bg-white/90 p-8 shadow-2xl backdrop-blur">
 
-    <h1 class="text-2xl font-bold text-slate-900 text-center mb-6">
-      Create your Busy Bee account
-    </h1>
+		<h1 class="text-2xl font-bold text-busybee-900 text-center mb-6">
+			Create your Busy Bee account
+		</h1>
 
-    <%= form_with model: @user, url: signup_path, local: true, class: "space-y-4" do |f| %>
+		<%= form_with model: @user, url: signup_path, local: true, class: "space-y-4" do |f| %>
 
-      <div>
-        <%= f.label :name, class: "text-sm font-medium text-slate-700" %>
-        <%= f.text_field :name, required: true,
-              class: "mt-1 w-full rounded-md border border-slate-300 px-3 py-2" %>
-      </div>
+			<div>
+				<%= f.label :name, class: "text-sm font-medium text-busybee-700" %>
+				<%= f.text_field :name, required: true,
+              class: "mt-1 w-full rounded-md border border-busybee-300 px-3 py-2" %>
+			</div>
 
-      <div>
-        <%= f.label :email, class: "text-sm font-medium text-slate-700" %>
-        <%= f.email_field :email, required: true,
-              class: "mt-1 w-full rounded-md border border-slate-300 px-3 py-2" %>
-      </div>
+			<div>
+				<%= f.label :email, class: "text-sm font-medium text-busybee-700" %>
+				<%= f.email_field :email, required: true,
+              class: "mt-1 w-full rounded-md border border-busybee-300 px-3 py-2" %>
+			</div>
 
-      <div>
-        <%= f.label :password, class: "text-sm font-medium text-slate-700" %>
-        <%= f.password_field :password, required: true,
-              class: "mt-1 w-full rounded-md border border-slate-300 px-3 py-2" %>
-      </div>
+			<div>
+				<%= f.label :password, class: "text-sm font-medium text-busybee-700" %>
+				<%= f.password_field :password, required: true,
+              class: "mt-1 w-full rounded-md border border-busybee-300 px-3 py-2" %>
+			</div>
 
-      <div>
-        <%= f.label :password_confirmation, class: "text-sm font-medium text-slate-700" %>
-        <%= f.password_field :password_confirmation, required: true,
-              class: "mt-1 w-full rounded-md border border-slate-300 px-3 py-2" %>
-      </div>
+			<div>
+				<%= f.label :password_confirmation, class: "text-sm font-medium text-busybee-700" %>
+				<%= f.password_field :password_confirmation, required: true,
+              class: "mt-1 w-full rounded-md border border-busybee-300 px-3 py-2" %>
+			</div>
 
-      <div>
-        <%= f.label :role, "Register as", class: "text-sm font-medium text-slate-700" %>
-        <%= f.select :role,
+			<div>
+				<%= f.label :role, "Register as", class: "text-sm font-medium text-busybee-700" %>
+				<%= f.select :role,
               [["Client", "client"], ["Developer", "developer"]],
               {},
-              class: "mt-1 w-full rounded-md border border-slate-300 px-3 py-2" %>
-      </div>
+              class: "mt-1 w-full rounded-md border border-busybee-300 px-3 py-2" %>
+			</div>
 
-      <div>
-        <%= f.label :address, class: "text-sm font-medium text-slate-700" %>
-        <%= f.text_field :address,
-              class: "mt-1 w-full rounded-md border border-slate-300 px-3 py-2" %>
-      </div>
+			<div>
+				<%= f.label :address, class: "text-sm font-medium text-busybee-700" %>
+				<%= f.text_field :address,
+              class: "mt-1 w-full rounded-md border border-busybee-300 px-3 py-2" %>
+			</div>
 
-      <div class="grid grid-cols-2 gap-3">
-        <div>
-          <%= f.label :suburb, class: "text-sm font-medium text-slate-700" %>
-          <%= f.text_field :suburb,
-                class: "mt-1 w-full rounded-md border border-slate-300 px-3 py-2" %>
-        </div>
+			<div class="grid grid-cols-2 gap-3">
+				<div>
+					<%= f.label :suburb, class: "text-sm font-medium text-busybee-700" %>
+					<%= f.text_field :suburb,
+                class: "mt-1 w-full rounded-md border border-busybee-300 px-3 py-2" %>
+				</div>
 
-        <div>
-          <%= f.label :postcode, class: "text-sm font-medium text-slate-700" %>
-          <%= f.text_field :postcode,
-                class: "mt-1 w-full rounded-md border border-slate-300 px-3 py-2" %>
-        </div>
-      </div>
+				<div>
+					<%= f.label :postcode, class: "text-sm font-medium text-busybee-700" %>
+					<%= f.text_field :postcode,
+                class: "mt-1 w-full rounded-md border border-busybee-300 px-3 py-2" %>
+				</div>
+			</div>
 
-      <div>
-        <%= f.label :country, class: "text-sm font-medium text-slate-700" %>
-        <%= f.text_field :country,
-              class: "mt-1 w-full rounded-md border border-slate-300 px-3 py-2" %>
-      </div>
+			<div>
+				<%= f.label :country, class: "text-sm font-medium text-busybee-700" %>
+				<%= f.text_field :country,
+              class: "mt-1 w-full rounded-md border border-busybee-300 px-3 py-2" %>
+			</div>
 
-      <div class="pt-3">
-        <%= f.submit "Create account",
+			<div class="pt-3">
+				<%= f.submit "Create account",
               class: "w-full rounded-md bg-busybee-500 px-4 py-2 font-medium text-white hover:bg-busybee-600" %>
-      </div>
+			</div>
 
-    <% end %>
+		<% end %>
 
-    <p class="mt-6 text-center text-sm text-slate-500">
-      Already have an account?
-      <%= link_to "Login", login_path, class: "text-busybee-600 hover:underline" %>
-    </p>
+		<p class="mt-6 text-center text-sm text-busybee-500">
+			Already have an account?
+			<%= link_to "Login", login_path, class: "text-busybee-600 hover:underline" %>
+		</p>
 
-  </div>
+	</div>
 </div>

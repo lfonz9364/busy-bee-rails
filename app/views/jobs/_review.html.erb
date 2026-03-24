@@ -1,28 +1,28 @@
 <% if logged_in? && current_user.client == @job.client %>
 	<div class="mt-6 rounded-2xl border border-white/60 bg-white/88 p-6 shadow-xl backdrop-blur">
-		<h2 class="text-xl font-semibold text-slate-900">Applications</h2>
+		<h2 class="text-xl font-semibold text-busybee-900">Applications</h2>
 
 		<% if @job.job_applications.any? %>
 			<div class="mt-4 space-y-4">
 				<% @job.job_applications.includes(developer: :user).order(created_at: :desc).each do |application| %>
-					<div class="rounded-xl border border-slate-200/80 bg-white/80 p-4 shadow-sm">
+					<div class="rounded-xl border border-busybee-200/80 bg-white/80 p-4 shadow-sm">
 						<div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
 							<div>
-								<p class="font-semibold text-slate-900">
+								<p class="font-semibold text-busybee-900">
 									<%= link_to application.developer.name,
                         developer_path(application.developer),
                         class: "text-busybee-700 underline decoration-busybee-200 underline-offset-2 hover:text-busybee-800" %>
 								</p>
 
-								<p class="mt-1 text-sm text-slate-500">
+								<p class="mt-1 text-sm text-busybee-500">
 									Applied <%= time_ago_in_words(application.created_at) %> ago
 								</p>
 
-								<p class="mt-2 text-sm text-slate-700">
+								<p class="mt-2 text-sm text-busybee-700">
 									<%= application.message.presence || "No message provided." %>
 								</p>
 
-								<p class="mt-2 text-xs text-slate-500">
+								<p class="mt-2 text-xs text-busybee-500">
 									Auto-declines after:
 									<%= l(application.auto_decline_deadline, format: :long) rescue application.auto_decline_deadline %>
 								</p>
@@ -50,7 +50,7 @@
 				<% end %>
 			</div>
 		<% else %>
-			<p class="mt-3 text-sm text-slate-500">No applications yet.</p>
+			<p class="mt-3 text-sm text-busybee-500">No applications yet.</p>
 		<% end %>
 	</div>
 <% end %>

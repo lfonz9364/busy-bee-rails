@@ -1,14 +1,14 @@
 <div class="space-y-8">
 	<div class="rounded-2xl border border-white/60 bg-white/80 p-6 shadow-lg backdrop-blur">
-		<h1 class="text-3xl font-bold tracking-tight text-slate-900">My Posted Jobs</h1>
-		<p class="mt-1 text-sm text-slate-600">
+		<h1 class="text-3xl font-bold tracking-tight text-busybee-900">My Posted Jobs</h1>
+		<p class="mt-1 text-sm text-busybee-600">
 			Manage the jobs you have posted across all stages.
 		</p>
 	</div>
 
 	<section class="rounded-2xl border border-white/60 bg-white/88 p-6 shadow-xl backdrop-blur">
 		<div class="flex items-center justify-between">
-			<h2 class="text-xl font-semibold text-slate-900">Open Jobs</h2>
+			<h2 class="text-xl font-semibold text-busybee-900">Open Jobs</h2>
 			<%= link_to "Post new job",
             new_job_path,
             class: "rounded-md bg-busybee-500 px-4 py-2 text-sm font-medium text-white hover:bg-busybee-600" %>
@@ -17,16 +17,16 @@
 		<% if @open_jobs.any? %>
 			<div class="mt-4 space-y-4">
 				<% @open_jobs.each do |job| %>
-					<div class="rounded-xl border border-slate-200/80 bg-white/80 p-4 shadow-sm">
+					<div class="rounded-xl border border-busybee-200/80 bg-white/80 p-4 shadow-sm">
 						<div class="flex items-start justify-between gap-4">
 							<div>
-								<p class="font-semibold text-slate-900">
+								<p class="font-semibold text-busybee-900">
 									<%= link_to job.title, job_path(job), class: "text-busybee-700 hover:underline" %>
 								</p>
-								<p class="mt-1 text-sm text-slate-500">
+								<p class="mt-1 text-sm text-busybee-500">
 									Developer: <%= job.developer&.name || "Unassigned" %>
 								</p>
-								<p class="mt-2 text-sm text-slate-700">
+								<p class="mt-2 text-sm text-busybee-700">
 									Reward: $<%= job.reward %>
 								</p>
 							</div>
@@ -39,27 +39,27 @@
 				<% end %>
 			</div>
 		<% else %>
-			<p class="mt-4 text-sm text-slate-500">No open jobs.</p>
+			<p class="mt-4 text-sm text-busybee-500">No open jobs.</p>
 		<% end %>
 	</section>
 
 	<section class="rounded-2xl border border-white/60 bg-white/88 p-6 shadow-xl backdrop-blur">
-		<h2 class="text-xl font-semibold text-slate-900">In Progress Jobs</h2>
+		<h2 class="text-xl font-semibold text-busybee-900">In Progress Jobs</h2>
 
 		<% if @in_progress_jobs.any? %>
 			<div class="mt-4 space-y-4">
 				<% @in_progress_jobs.each do |job| %>
-					<div class="rounded-xl border border-slate-200/80 bg-white/80 p-4 shadow-sm">
+					<div class="rounded-xl border border-busybee-200/80 bg-white/80 p-4 shadow-sm">
 						<div class="flex items-start justify-between gap-4">
 							<div>
-								<p class="font-semibold text-slate-900">
+								<p class="font-semibold text-busybee-900">
 									<%= link_to job.title, job_path(job), class: "text-busybee-700 hover:underline" %>
 								</p>
-								<p class="mt-1 text-sm text-slate-500">
+								<p class="mt-1 text-sm text-busybee-500">
 									Developer:
 									<%= job.developer.present? ? link_to(job.developer.name, developer_path(job.developer), class: "text-busybee-700 hover:underline") : "Unassigned" %>
 								</p>
-								<p class="mt-2 text-sm text-slate-700">
+								<p class="mt-2 text-sm text-busybee-700">
 									Reward: $<%= job.reward %>
 								</p>
 							</div>
@@ -72,27 +72,27 @@
 				<% end %>
 			</div>
 		<% else %>
-			<p class="mt-4 text-sm text-slate-500">No jobs currently in progress.</p>
+			<p class="mt-4 text-sm text-busybee-500">No jobs currently in progress.</p>
 		<% end %>
 	</section>
 
 	<section class="rounded-2xl border border-white/60 bg-white/88 p-6 shadow-xl backdrop-blur">
-		<h2 class="text-xl font-semibold text-slate-900">Completed Jobs</h2>
+		<h2 class="text-xl font-semibold text-busybee-900">Completed Jobs</h2>
 
 		<% if @completed_jobs.any? %>
 			<div class="mt-4 space-y-4">
 				<% @completed_jobs.each do |job| %>
-					<div class="rounded-xl border border-slate-200/80 bg-white/80 p-4 shadow-sm">
+					<div class="rounded-xl border border-busybee-200/80 bg-white/80 p-4 shadow-sm">
 						<div class="flex items-start justify-between gap-4">
 							<div>
-								<p class="font-semibold text-slate-900">
+								<p class="font-semibold text-busybee-900">
 									<%= link_to job.title, job_path(job), class: "text-busybee-700 hover:underline" %>
 								</p>
-								<p class="mt-1 text-sm text-slate-500">
+								<p class="mt-1 text-sm text-busybee-500">
 									Developer:
 									<%= job.developer.present? ? link_to(job.developer.name, developer_path(job.developer), class: "text-busybee-700 hover:underline") : "Unassigned" %>
 								</p>
-								<p class="mt-2 text-sm text-slate-700">
+								<p class="mt-2 text-sm text-busybee-700">
 									Reward: $<%= job.reward %>
 								</p>
 							</div>
@@ -105,23 +105,23 @@
 				<% end %>
 			</div>
 		<% else %>
-			<p class="mt-4 text-sm text-slate-500">No completed jobs yet.</p>
+			<p class="mt-4 text-sm text-busybee-500">No completed jobs yet.</p>
 		<% end %>
 	</section>
 
 	<section class="rounded-2xl border border-white/60 bg-white/88 p-6 shadow-xl backdrop-blur">
-		<h2 class="text-xl font-semibold text-slate-900">Cancelled Jobs</h2>
+		<h2 class="text-xl font-semibold text-busybee-900">Cancelled Jobs</h2>
 
 		<% if @cancelled_jobs.any? %>
 			<div class="mt-4 space-y-4">
 				<% @cancelled_jobs.each do |job| %>
-					<div class="rounded-xl border border-slate-200/80 bg-white/80 p-4 shadow-sm">
+					<div class="rounded-xl border border-busybee-200/80 bg-white/80 p-4 shadow-sm">
 						<div class="flex items-start justify-between gap-4">
 							<div>
-								<p class="font-semibold text-slate-900">
+								<p class="font-semibold text-busybee-900">
 									<%= link_to job.title, job_path(job), class: "text-busybee-700 hover:underline" %>
 								</p>
-								<p class="mt-2 text-sm text-slate-700">
+								<p class="mt-2 text-sm text-busybee-700">
 									Reward: $<%= job.reward %>
 								</p>
 							</div>
@@ -134,7 +134,7 @@
 				<% end %>
 			</div>
 		<% else %>
-			<p class="mt-4 text-sm text-slate-500">No cancelled jobs.</p>
+			<p class="mt-4 text-sm text-busybee-500">No cancelled jobs.</p>
 		<% end %>
 	</section>
 </div>

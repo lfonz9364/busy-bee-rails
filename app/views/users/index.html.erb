@@ -1,6 +1,6 @@
 <div class="mb-8 rounded-2xl border border-white/60 bg-white/80 p-6 shadow-lg backdrop-blur">
-	<h1 class="text-3xl font-bold tracking-tight text-slate-900">Users</h1>
-	<p class="mt-1 text-sm text-slate-600">
+	<h1 class="text-3xl font-bold tracking-tight text-busybee-900">Users</h1>
+	<p class="mt-1 text-sm text-busybee-600">
 		Admin-only user management.
 	</p>
 </div>
@@ -10,9 +10,9 @@
 		<% @users.each do |user| %>
 			<div class="flex items-center justify-between rounded-2xl border border-white/60 bg-white/88 p-5 shadow-xl backdrop-blur">
 				<div>
-					<h2 class="text-lg font-semibold text-slate-900"><%= user.name %></h2>
-					<p class="text-sm text-slate-500"><%= user.email %></p>
-					<p class="mt-1 text-xs text-slate-400">
+					<h2 class="text-lg font-semibold text-busybee-900"><%= user.name %></h2>
+					<p class="text-sm text-busybee-500"><%= user.email %></p>
+					<p class="mt-1 text-xs text-busybee-400">
 						<%= user.admin? ? "Admin" : "Standard user" %>
 					</p>
 				</div>
@@ -20,7 +20,7 @@
 				<div class="flex items-center gap-3">
 					<%= link_to "View profile",
                 user_path(user),
-                class: "rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50" %>
+                class: "rounded-md border border-busybee-300 bg-white px-4 py-2 text-sm font-medium text-busybee-700 hover:bg-busybee-50" %>
 
 					<% unless user.admin? %>
 						<%= button_to "Make admin",
@@ -34,7 +34,7 @@
 		<% end %>
 	</div>
 <% else %>
-	<div class="rounded-2xl border border-white/60 bg-white/88 p-6 text-sm text-slate-500 shadow-xl backdrop-blur">
+	<div class="rounded-2xl border border-white/60 bg-white/88 p-6 text-sm text-busybee-500 shadow-xl backdrop-blur">
 		No users found.
 	</div>
 <% end %>
