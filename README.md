@@ -12,10 +12,7 @@ A lot of people nowadays have many ideas but prevented to create it by expertise
 - Postgresql - 17.8
 - ActiveRecord - 7.2.3
 - Minitest - 5.27.0
-- BCrypt - 3.1.21
-- JQuery - 3.7.1
 - Mail - 2.9.0
-- Sprockets - 3.7.5
 - Tailwindcss - 4.2.0
 
 ### What I Learned
