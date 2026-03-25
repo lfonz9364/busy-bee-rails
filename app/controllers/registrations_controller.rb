@@ -9,6 +9,9 @@ class RegistrationsController < ApplicationController
     if @user.save
       create_role_record!(@user)
 
+      # 🔥 FORCE consistency (important for CI)
+      @user.update_column(:role, registration_params[:role])
+
       reset_session
       session[:user_id] = @user.id
       redirect_to root_path, notice: "Account created successfully."
@@ -41,9 +44,11 @@ class RegistrationsController < ApplicationController
   def create_role_record!(user)
     case user.role
     when "client"
-      Client.create!(user: user)
+      user.create_client!
     when "developer"
-      Developer.create!(user: user, skillset: registration_params[:skillset])
+      user.create_developer!(skillset: registration_params[:skillset].to_s)
+    else
+      raise "Unknown role: #{user.role}"
     end
   end
 end

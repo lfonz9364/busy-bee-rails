@@ -128,7 +128,7 @@ users = User.create!([
     postcode: 4103,
     country: 'Australia',
     contact_person: 'Jane',
-    abn: '896773465',
+    abn: '89677346512',
     role: 'client',
     password: 'password123',
     password_confirmation: 'password123'

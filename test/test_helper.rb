@@ -49,7 +49,7 @@ class ActiveSupport::TestCase
   end
 
   def create_admin(overrides = {})
-    create_user({admin: true})
+    create_user({admin: true}.merge(overrides))
   end
 
   def create_job(overrides = {})
@@ -81,9 +81,11 @@ class ActiveSupport::TestCase
   end
 
   def create_feedback(overrides = {})
+    client = create_client
+
     defaults = {
       job: create_job,
-      user: create_client,
+      user: client.user,
       rating: 5,
       comment: "Great work!",
       role: "client"

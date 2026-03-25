@@ -36,9 +36,10 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
+          ruby-version: 3.4.1
           bundler-cache: true
 
-      - name: Install PostgreSQL client libs
+      - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y libpq-dev
@@ -54,7 +55,7 @@ jobs:
   deploy:
     needs: test
     runs-on: ubuntu-latest
-    environment: production
+    if: github.ref == 'refs/heads/main'
 
     steps:
       - name: Trigger Render production deploy

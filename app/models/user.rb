@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   has_secure_password
   before_validation :normalise_abn
+  before_validation :normalise_email
+
 
   #  Roles
   has_one :developer, dependent: :destroy
@@ -62,5 +64,9 @@ class User < ActiveRecord::Base
 
   def normalise_abn
     self.abn = abn.to_s.gsub(/\D/, "")
+  end
+
+  def normalise_email
+    self.email = email.to_s.downcase.strip
   end
 end
