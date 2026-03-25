@@ -12,9 +12,11 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
   test "can request password reset for existing user" do
     user = create_user(email: "reset@example.com")
 
-    assert_emails 1 do
-      post forgot_password_url, params: { email: "reset@example.com" }
-    end
+    ActionMailer::Base.deliveries.clear
+
+    post forgot_password_url, params: { email: "reset@example.com" }
+
+    assert_equal 1, ActionMailer::Base.deliveries.size
 
     assert_redirected_to login_url
     assert user.reload.reset_password_token.present?
