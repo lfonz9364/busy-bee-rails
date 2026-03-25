@@ -12,8 +12,6 @@ gem 'rails', '~> 7.1'
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
-# Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
@@ -23,14 +21,19 @@ gem 'coffee-rails', '~> 4.2'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
+# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks 
+# Not needed in Rails 7
+# gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
+# Use Tailwind CSS for styling
+gem 'tailwindcss-rails'
+# Allow asset precompilation to work 
+gem "sprockets-rails"
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -54,5 +57,12 @@ group :development do
   # gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
+# Limit Minitest to version 5.22 to avoid issues with Rails 7.1
+group :test do
+  gem "minitest", "~> 5.22"
+end
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem "dotenv-rails", "~> 3.2"

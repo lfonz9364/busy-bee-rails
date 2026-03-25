@@ -1,0 +1,58 @@
+<%= form_with model: @job, local: true, class: "space-y-5" do |f| %>
+	<% if @job.errors.any? %>
+		<div class="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800">
+			<p class="font-semibold mb-2">
+				<%= pluralize(@job.errors.count, "error") %> prevented this job from being saved:
+			</p>
+			<ul class="list-disc pl-5">
+				<% @job.errors.full_messages.each do |message| %>
+					<li><%= message %></li>
+				<% end %>
+			</ul>
+		</div>
+	<% end %>
+
+	<div>
+		<%= f.label :title, class: "mb-1 block text-sm font-medium text-busybee-700" %>
+		<%= f.text_field :title,
+          class: "block w-full rounded-md border border-busybee-300 px-3 py-2 text-sm shadow-sm focus:border-busybee-500 focus:outline-none focus:ring-1 focus:ring-busybee-500" %>
+	</div>
+
+	<div>
+		<%= f.label :description, class: "mb-1 block text-sm font-medium text-busybee-700" %>
+		<%= f.text_area :description, rows: 6,
+          class: "block w-full rounded-md border border-busybee-300 px-3 py-2 text-sm shadow-sm focus:border-busybee-500 focus:outline-none focus:ring-1 focus:ring-busybee-500" %>
+	</div>
+
+	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+		<div>
+			<%= f.label :reward, class: "mb-1 block text-sm font-medium text-busybee-700" %>
+			<%= f.number_field :reward,
+            class: "block w-full rounded-md border border-busybee-300 px-3 py-2 text-sm shadow-sm focus:border-busybee-500 focus:outline-none focus:ring-1 focus:ring-busybee-500" %>
+		</div>
+
+		<div>
+			<%= f.label :deadline, class: "mb-1 block text-sm font-medium text-busybee-700" %>
+			<%= f.datetime_local_field :deadline,
+            value: (@job.deadline&.strftime("%Y-%m-%dT%H:%M")),
+            class: "block w-full rounded-md border border-busybee-300 px-3 py-2 text-sm shadow-sm focus:border-busybee-500 focus:outline-none focus:ring-1 focus:ring-busybee-500" %>
+		</div>
+	</div>
+
+	<div>
+		<%= f.label :status, class: "mb-1 block text-sm font-medium text-busybee-700" %>
+		<%= f.select :status,
+          [["Open", "open"], ["In progress", "in_progress"], ["Completed", "completed"], ["Cancelled", "cancelled"]],
+          {},
+          class: "block w-full rounded-md border border-busybee-300 px-3 py-2 text-sm shadow-sm focus:border-busybee-500 focus:outline-none focus:ring-1 focus:ring-busybee-500" %>
+	</div>
+
+	<div class="flex items-center gap-3 pt-2">
+		<%= f.submit(@job.new_record? ? "Create job" : "Update job",
+          class: "rounded-md bg-busybee-500 px-4 py-2 text-sm font-medium text-white hover:bg-busybee-600") %>
+
+		<%= link_to "Cancel",
+          @job.new_record? ? jobs_path : job_path(@job),
+          class: "rounded-md border border-busybee-300 bg-white px-4 py-2 text-sm font-medium text-busybee-700 hover:bg-busybee-50" %>
+	</div>
+<% end %>

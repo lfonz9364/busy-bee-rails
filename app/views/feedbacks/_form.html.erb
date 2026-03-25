@@ -1,0 +1,41 @@
+<%= form_with model: @feedback,
+      url: @feedback.new_record? ? job_feedbacks_path(@job) : feedback_path(@feedback),
+      local: true,
+      class: "space-y-5" do |f| %>
+
+	<% if @feedback.errors.any? %>
+		<div class="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800">
+			<p class="font-semibold mb-2">
+				<%= pluralize(@feedback.errors.count, "error") %> prevented this feedback from being saved:
+			</p>
+			<ul class="list-disc pl-5">
+				<% @feedback.errors.full_messages.each do |message| %>
+					<li><%= message %></li>
+				<% end %>
+			</ul>
+		</div>
+	<% end %>
+
+	<div>
+		<%= f.label :rating, class: "mb-1 block text-sm font-medium text-busybee-700" %>
+		<%= f.select :rating,
+          [[1, 1], [2, 2], [3, 3], [4, 4], [5, 5]],
+          {},
+          class: "block w-full rounded-md border border-busybee-300 px-3 py-2 text-sm shadow-sm focus:border-busybee-500 focus:outline-none focus:ring-1 focus:ring-busybee-500" %>
+	</div>
+
+	<div>
+		<%= f.label :comment, class: "mb-1 block text-sm font-medium text-busybee-700" %>
+		<%= f.text_area :comment, rows: 5,
+          class: "block w-full rounded-md border border-busybee-300 px-3 py-2 text-sm shadow-sm focus:border-busybee-500 focus:outline-none focus:ring-1 focus:ring-busybee-500" %>
+	</div>
+
+	<div class="flex items-center gap-3 pt-2">
+		<%= f.submit(@feedback.new_record? ? "Create feedback" : "Update feedback",
+          class: "rounded-md bg-busybee-500 px-4 py-2 text-sm font-medium text-white hover:bg-busybee-600") %>
+
+		<%= link_to "Cancel",
+          @feedback.new_record? ? job_path(@job) : job_path(@feedback.job),
+          class: "rounded-md border border-busybee-300 bg-white px-4 py-2 text-sm font-medium text-busybee-700 hover:bg-busybee-50" %>
+	</div>
+<% end %>

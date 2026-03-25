@@ -9,29 +9,43 @@ A lot of people nowadays have many ideas but prevented to create it by expertise
 - Ruby - 3.4.1
 - Bundler - 2.6.8
 - Rails - 7.2.3
-- Postgresql - 17.4
+- Postgresql - 17.8
 - ActiveRecord - 7.2.3
-
-### Approach
-
-I choose to follow the best practice of doing the documentation and planning at the beginning . First of all, I tried to create a schema and wireframes to aid in development. Second, the database schema then translated into Postgresql tables with relationships notated in ActiveRecord. Third, the coding process was divided into four parts such as developer, requester, jobs and feedbacks. Last but not least, the features for each part also added during development to make it more user friendly.
+- Minitest - 5.27.0
+- Mail - 2.9.0
+- Tailwindcss - 4.2.0
 
 ### What I Learned
 
-### Unsolved Problems
-
-### To-Do-List
+- TailwindCSS use JS bundler to precompile the CSS
+- Several auto created configs might caused issues
+- Tailwind > v4 simplified tailwind import into "tailwindcss"
+- Rails DB auto generate id unlike sql file where id need to be specified when created a table
+- Set a column as FK automatically indexed it
+- Model must refer to db schema to properly create and validate data
+- Application layer cascade is a better solution than a DB layer cascade for allowing parent record deletion
+- SaaS like Rails app should have a validations in Models
+- Only delegate necessary information especially related to public profile
+- Routing in Ruby evaluated from top to bottom so it's important to put paths in order - from specific to general
+- Rails function are hoisted by default so function could be used before declaration
+- Session route is always singular
+- "!" used to represent function with side effect mutating object or raise exceptions
+- Default theme can be added directly to app/assets/tailwind/application.css and run `bin/rails tailwindcss:build`
+- If a method in controller just for displaying, before_action could take care any action and leave the definition empty
+- Rails auto generated conditional for boolean column/s on a table not an association but we could check association presence to return boolean
 
 ### Future Features
 
 - Project reminder
 - Payment page
+- Passkey implementation
 
 ### Deployment
 
 1. Run "Bundle Install"
-2. run "bin/rails db:create" and "bin/rails db:migrate"
+2. Run Postgresql
+3. Run "bin/rails db:create" and "bin/rails db:migrate" to create database
+4. Run "bin/dev" to start Rails server with Tailwind and JS bundler
+5. Go to <http://localhost:3000> in browser
 
 [visit page](https://github.com/lfonz9364/busy-bee-rails)
-![alt tag]()
-![alt tag]()
