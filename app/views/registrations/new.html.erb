@@ -5,6 +5,19 @@
 			Create your Busy Bee account
 		</h1>
 
+		<% if @user.errors.any? %>
+			<div class="mb-4 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800">
+				<p class="mb-2 font-semibold">
+					<%= pluralize(@user.errors.count, "error") %> prevented signup:
+				</p>
+				<ul class="list-disc pl-5">
+					<% @user.errors.full_messages.each do |message| %>
+						<li><%= message %></li>
+					<% end %>
+				</ul>
+			</div>
+		<% end %>
+
 		<%= form_with model: @user, url: signup_path, local: true, class: "space-y-4 text-busybee-700" do |f| %>
 
 			<div>
@@ -28,6 +41,12 @@
               required: true,
               data: { abn_format: true },
               class: "mt-1 w-full rounded-md border border-busybee-300 px-3 py-2" %>
+			</div>
+
+			<div>
+				<%= f.label :contact_person, class: "text-sm font-medium text-busybee-700" %>
+				<%= f.text_field :contact_person,
+        class: "mt-1 w-full rounded-md border border-busybee-300 px-3 py-2" %>
 			</div>
 
 			<div>
@@ -85,10 +104,18 @@
 				</div>
 			</div>
 
-			<div>
-				<%= f.label :country, class: "text-sm font-medium text-busybee-700" %>
-				<%= f.text_field :country,
+			<div class="grid grid-cols-2 gap-3">
+				<div>
+					<%= f.label :state, class: "text-sm font-medium text-busybee-700" %>
+					<%= f.text_field :state,
+        class: "mt-1 w-full rounded-md border border-busybee-300 px-3 py-2" %>
+				</div>
+
+				<div>
+					<%= f.label :country, class: "text-sm font-medium text-busybee-700" %>
+					<%= f.text_field :country,
               class: "mt-1 w-full rounded-md border border-busybee-300 px-3 py-2" %>
+				</div>
 			</div>
 
 			<div class="pt-3">
