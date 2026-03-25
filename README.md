@@ -48,4 +48,4 @@ A lot of people nowadays have many ideas but prevented to create it by expertise
 4. Run "bin/dev" to start Rails server with Tailwind and JS bundler
 5. Go to <http://localhost:3000> in browser
 
-[visit page](https://github.com/lfonz9364/busy-bee-rails)
+[visit page](https://busy-bee-icmk.onrender.com/)
