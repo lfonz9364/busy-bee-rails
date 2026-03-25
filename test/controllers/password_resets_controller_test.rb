@@ -31,6 +31,18 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
     # assert user.reload.reset_password_token.present?
   end
 
+  test "debug password reset mail setup" do
+    user = create_user(email: "reset@example.com")
+
+    puts "USER CREATED #{user}"
+    puts "FOUND USER BEFORE REQUEST: #{User.find_by(email: 'reset@example.com')&.email.inspect}"
+    puts "QUEUE ADAPTER: #{ActiveJob::Base.queue_adapter.class.name}"
+
+    post forgot_password_url, params: { email: "reset@example.com" }
+
+    puts "DELIVERIES COUNT: #{ActionMailer::Base.deliveries.count}"
+  end
+
   test "forgot password does not reveal whether email exists" do
     post forgot_password_url, params: { email: "missing@example.com" }
 
