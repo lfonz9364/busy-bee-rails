@@ -74,4 +74,6 @@ Rails.application.configure do
 
   # config/environments/development.rb
   config.active_job.queue_adapter = :async
+
+  config.active_storage.service = :local
 end
