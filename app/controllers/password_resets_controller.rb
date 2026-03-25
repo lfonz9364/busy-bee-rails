@@ -5,6 +5,9 @@ class PasswordResetsController < ApplicationController
   def create
     user = User.find_by(email: params[:email]&.downcase&.strip)
 
+    Rails.logger.debug "PASSWORD RESET EMAIL PARAM: #{params[:email].inspect}"
+    Rails.logger.debug "PASSWORD RESET USER FOUND: #{user&.email.inspect}"
+
     user&.generate_password_reset_token!
 
     # Sending email

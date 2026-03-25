@@ -12,8 +12,11 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
   test "can request password reset for existing user" do
     user = create_user(email: "reset@example.com")
 
+    assert_equal "reset@example.com", user.email
+    assert User.find_by(email: "reset@example.com").present?
+
     assert_enqueued_jobs 1 do
-      post forgot_password_url, params: { email: user.email }
+      post forgot_password_url, params: { email: "reset@example.com" }
     end
     # assert_emails 1 do
     #   perform_enqueued_jobs do
