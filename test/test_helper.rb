@@ -4,7 +4,6 @@ require 'rails/test_help'
 require "active_job/test_helper"
 
 class ActiveSupport::TestCase
-  include ActiveJob::TestHelper
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
 
@@ -51,7 +50,7 @@ class ActiveSupport::TestCase
   end
 
   def create_admin(overrides = {})
-    create_user({admin: true})
+    create_user({admin: true}.merge(overrides))
   end
 
   def create_job(overrides = {})
@@ -83,9 +82,11 @@ class ActiveSupport::TestCase
   end
 
   def create_feedback(overrides = {})
+    client = create_client
+
     defaults = {
       job: create_job,
-      user: create_client,
+      user: client.user,
       rating: 5,
       comment: "Great work!",
       role: "client"
@@ -96,6 +97,8 @@ class ActiveSupport::TestCase
 end
 
 class ActionDispatch::IntegrationTest
+  include ActiveJob::TestHelper
+  
   def sign_in_as(user, password: "password123")
     post login_url, params: {
       email: user.email,
