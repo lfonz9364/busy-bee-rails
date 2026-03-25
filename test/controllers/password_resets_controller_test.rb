@@ -2,6 +2,13 @@ require "test_helper"
 
 class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
   include ActiveJob::TestHelper
+
+  setup do
+    ActionMailer::Base.deliveries.clear
+    clear_enqueued_jobs
+    clear_performed_jobs
+  end
+
   test "can request password reset for existing user" do
     user = create_user
 
