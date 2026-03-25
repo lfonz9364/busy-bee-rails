@@ -10,7 +10,7 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "can request password reset for existing user" do
-    user = create_user
+    user = create_user(email: "reset@example.com")
 
     assert_emails 1 do
       perform_enqueued_jobs do
@@ -18,6 +18,9 @@ class PasswordResetsControllerTest < ActionDispatch::IntegrationTest
       end
     end
 
+    perform_enqueued_jobs
+
+    assert_equal 1, ActionMailer::Base.deliveries.count
     assert_redirected_to login_url
     assert user.reload.reset_password_token.present?
   end
