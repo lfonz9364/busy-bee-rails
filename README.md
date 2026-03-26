@@ -48,9 +48,21 @@ A lot of people nowadays have many ideas but prevented to create it by expertise
 4. Run "bin/dev" to start Rails server with Tailwind and JS bundler
 5. Go to <http://localhost:3000> in browser
 
-[visit page](https://busy-bee-icmk.onrender.com/)
+[Busy Bee Site](https://busy-bee-icmk.onrender.com/)
+
+### Login Page
+
 <img width="1924" height="1113" alt="Login Page" src="https://github.com/user-attachments/assets/c517936e-833a-491f-8114-f384a54d62a5" />
+
+### Admin Landing Page
+
 <img width="1920" height="1113" alt="Admin Landing Page" src="https://github.com/user-attachments/assets/b5aecf23-1247-4395-a1e1-88413622b8f1" />
+
+### Developer Landing Page
+
 <img width="1926" height="1116" alt="Developer Landing Page" src="https://github.com/user-attachments/assets/4efd485c-ad01-43b6-bab5-7e6ac0d8bca4" />
+
+### Client Landing Page
+
 <img width="1917" height="1114" alt="Client Landing Page" src="https://github.com/user-attachments/assets/234ebfaa-0a08-40e9-bae7-72e013d237c5" />
 
