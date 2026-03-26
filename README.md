@@ -1,4 +1,4 @@
-<img width="1924" height="1113" alt="Screenshot 2026-03-24 at 4 45 43 pm" src="https://github.com/user-attachments/assets/a8ee1fd4-6103-440b-b108-abe6de1417e4" /># Busy Bee
+# Busy Bee
 
 ## User Story
 
