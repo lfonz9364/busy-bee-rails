@@ -31,8 +31,15 @@
 	</div>
 
 	<div class="flex items-center gap-3 pt-2">
-		<%= f.submit(@feedback.new_record? ? "Create feedback" : "Update feedback",
-          class: "rounded-md bg-busybee-500 px-4 py-2 text-sm font-medium text-white hover:bg-busybee-600") %>
+		<% submit_text = @feedback.new_record? ? "Create feedback" : "Update feedback" %>
+		<% loading_text = @feedback.new_record? ? "Creating feedback..." : "Updating feedback..." %>
+
+		<%= f.submit submit_text,
+          class: "rounded-md bg-busybee-500 px-4 py-2 text-sm font-medium text-white hover:bg-busybee-600",
+          data: { 
+            loading_text: loading_text,
+            disable_with: loading_text 
+          } %>
 
 		<%= link_to "Cancel",
           @feedback.new_record? ? job_path(@job) : job_path(@feedback.job),
