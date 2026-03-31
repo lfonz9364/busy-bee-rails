@@ -120,7 +120,11 @@
 
 			<div class="pt-3">
 				<%= f.submit "Create account",
-              class: "w-full rounded-md bg-busybee-500 px-4 py-2 font-medium text-white hover:bg-busybee-600" %>
+              class: "w-full rounded-md bg-busybee-500 px-4 py-2 font-medium text-white hover:bg-busybee-600",
+              data: {
+                loading_text: "Creating account...",
+                disable_with: "Creating account..."  
+              } %>
 			</div>
 
 		<% end %>
