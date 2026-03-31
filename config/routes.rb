@@ -2,6 +2,10 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root "sessions#new"
 
+  match "/404", to: "errors#not_found", via: :all
+  match "/422", to: "errors#unprocessable", via: :all
+  match "/500", to: "errors#internal_server_error", via: :all
+
   get     "/my-application",      to: "job_applications#mine", as: :my_applications
   get     "/my-posted-jobs",      to: "jobs#mine",             as: :my_posted_jobs
 
