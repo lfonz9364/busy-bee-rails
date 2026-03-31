@@ -71,7 +71,11 @@
 
 		<div class="flex items-center gap-3 pt-2">
 			<%= f.submit "Update profile",
-            class: "rounded-md bg-busybee-500 px-4 py-2 text-sm font-medium text-white hover:bg-busybee-600" %>
+            class: "rounded-md bg-busybee-500 px-4 py-2 text-sm font-medium text-white hover:bg-busybee-600",
+            data: {
+              loading_text: "Updating profile...",
+              disable_with: "Updating profile..."
+            } %>
 
 			<%= link_to "Cancel",
             user_path(@user),

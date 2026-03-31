@@ -48,8 +48,15 @@
 	</div>
 
 	<div class="flex items-center gap-3 pt-2">
-		<%= f.submit(@job.new_record? ? "Create job" : "Update job",
-          class: "rounded-md bg-busybee-500 px-4 py-2 text-sm font-medium text-white hover:bg-busybee-600") %>
+		<% submit_text = @job.new_record? ? "Create job" : "Update job" %>
+		<% loading_text = @job.new_record? ? "Creating job..." : "Updating job..." %>
+
+		<%= f.submit submit_text,
+          class: "rounded-md bg-busybee-500 px-4 py-2 text-sm font-medium text-white hover:bg-busybee-600",
+          data: { 
+            loading_text: loading_text, 
+            disable_with: loading_text 
+          } %>
 
 		<%= link_to "Cancel",
           @job.new_record? ? jobs_path : job_path(@job),
