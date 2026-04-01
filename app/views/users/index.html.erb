@@ -8,26 +8,51 @@
 <% if @users.any? %>
 	<div class="space-y-4">
 		<% @users.each do |user| %>
-			<div class="flex items-center justify-between rounded-2xl border border-white/60 bg-white/88 p-5 shadow-xl backdrop-blur">
-				<div>
+			<div class="flex items-center justify-between rounded-2xl border border-white/60 bg-white/88 p-8 shadow-xl backdrop-blur flex-col md:flex-row md:p-5)">
+				<div class="flex border-b-4 border-busybee-300 mb-8 w-full p-4 flex-col items-center md:items-stretch md:border-none md:w-1/2">
 					<h2 class="text-lg font-semibold text-busybee-900"><%= user.name %></h2>
-					<p class="text-sm text-busybee-500"><%= user.email %></p>
+					<p class="text-sm text-busybee-500"><%= user.display_name %></p>
 					<p class="mt-1 text-xs text-busybee-400">
 						<%= user.admin? ? "Admin" : "Standard user" %>
 					</p>
 				</div>
 
-				<div class="flex items-center gap-3">
+				<div class="flex items-center gap-3 flex-col sm:flex-row sm:w-full sm:justify-around md:justify-end-safe">
 					<%= link_to "View profile",
                 user_path(user),
                 class: "rounded-md border border-busybee-300 bg-white px-4 py-2 text-sm font-medium text-busybee-700 hover:bg-busybee-50" %>
 
-					<% unless user.admin? %>
-						<%= button_to "Make admin",
-                  make_admin_user_path(user),
-                  method: :patch,
-                  data: { confirm: "Are you sure you want to grant admin access to #{user.name}?" },
-                  class: "rounded-md bg-busybee-500 px-4 py-2 text-sm font-medium text-white hover:bg-busybee-600" %>
+					<% if current_user&.admin? && user != current_user %>
+						<% button_text = user.completed_jobs_exist? ? "Archive" : "Delete" %>
+						<% confirm_text =
+              if user.in_progress_jobs_exist?
+                "This user has in-progress jobs and cannot be removed yet."
+              elsif user.completed_jobs_exist?
+                "Archive #{user.email}? Completed jobs and feedback will be preserved."
+              else
+                "Delete #{user.email}?"
+              end
+            %>
+
+						<% unless user.archived? %>
+							<%= button_to "Make admin",
+                    make_admin_user_path(user),
+                    method: :patch,
+                    data: { confirm: "Are you sure you want to grant admin access to #{user.name}?" },
+                    class: "rounded-md bg-busybee-500 px-4 py-2 text-sm font-medium text-white hover:bg-busybee-600" %>
+
+							<%= button_to button_text,
+                    user_path(user),
+                    method: :delete,
+                    disabled: user.in_progress_jobs_exist?,
+                    class: "rounded-md bg-busybee-500 px-4 py-2 text-sm font-medium text-white hover:bg-busybee-600 w-full",
+                    form: {
+                      class: "w-full sm:w-auto",
+                      data: {
+                        turbo_confirm: user.in_progress_jobs_exist? ? nil : confirm_text
+                      }
+                    } %>
+						<% end %>
 					<% end %>
 				</div>
 			</div>

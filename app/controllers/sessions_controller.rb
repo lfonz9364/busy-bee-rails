@@ -9,6 +9,11 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:email])
 
     if user&.authenticate(params[:password])
+      if user.archived?
+        redirect_to login_path, alert: "Your account has been deleted. Please contact customer support to reactivate."
+        return
+      end
+
       reset_session
       session[:user_id] = user.id
       redirect_to(session.delete(:forwarding_url) || role_based_root_path(user), notice: "Logged in!")
@@ -20,7 +25,7 @@ class SessionsController < ApplicationController
 
   def destroy
     reset_session
-    redirect_to root_path, notice: "Logged out!"
+    redirect_to login_path, notice: "Logged out!"
   end
 
   private
