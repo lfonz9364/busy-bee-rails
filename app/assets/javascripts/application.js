@@ -4,3 +4,4 @@
 //= require registration_role_toggle
 //= require form_loading
 //= require cable
+//= require mobile_menu
