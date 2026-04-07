@@ -1,0 +1,129 @@
+<% unless controller_name == "sessions" && action_name == "new" || !logged_in? %>
+	<nav class="sticky top-0 z-1000 border-b border-busybee-200 bg-white/95 backdrop-blur">
+		<div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 gap-6 sm:px-6 lg:px-8">
+
+			<!-- Logo/Brand -->
+			<div class="flex items-center min-w-22">
+				<%= link_to root_path, class: "text-xl font-bold tracking-tight text-busybee-600" do %>
+					Busy Bee
+				<% end %>
+			</div>
+
+			<!-- Desktop Menu -->
+			<div class="hidden items-center w-full justify-between md:flex">
+				<div class="flex gap-6">
+					<% unless current_user.client.present? && !current_user.admin? %>
+						<%= link_to "Jobs", jobs_path, class: "hover:text-busybee-500" %>
+						<%= link_to "Clients", clients_path, class: "hover:text-busybee-500" %>
+					<% end %>
+
+					<% unless current_user.developer.present? && !current_user.admin? %>
+						<%= link_to "Posted Jobs", my_posted_jobs_path, class: "hover:text-busybee-500" %>
+						<%= link_to "Developers", developers_path, class: "hover:text-busybee-500" %>
+					<% end %>
+
+					<% if current_user.admin? %>
+						<%= link_to "Users", users_path, class: "hover:text-busybee-500" %>
+					<% end %>
+				</div>
+
+				<% if logged_in? %>
+					<div class="flex gap-6">
+						<%= link_to user_path(current_user),
+                    class: "hidden sm:flex items-center gap-2 text-sm font-medium text-busybee-700 hover:text-busybee-500" do %>
+
+							<span class="flex h-8 w-8 items-center justify-center rounded-full bg-busybee-100 text-xs font-semibold text-busybee-700">
+								<%= current_user.name.first.upcase %>
+							</span>
+
+							<span class="hidden lg:inline"><%= current_user.name %></span>
+						<% end %>
+
+						<%= button_to "Logout", logout_path,
+                    method: :delete,
+                    class: "rounded-md bg-busybee-500 px-4 py-2 text-white hover:bg-busybee-600" %>
+					<% end %>
+				</div>
+
+			</div>
+
+			<!-- Mobile menu -->
+			<div class="md:hidden">
+				<button
+          type="button"
+          aria-label="Open menu"
+          class="inline-flex items-center justify-center rounded-md p-2 text-gray-700 transition hover:bg-gray-100 hover:text-busybee-700"
+          data-mobile-menu-open
+				>
+					<svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+					</svg>
+				</button>
+
+				<!-- Overlay -->
+				<div
+          class="fixed inset-0 z-1100 hidden bg-black/40 opacity-0 transition-opacity duration-200"
+          data-mobile-menu-overlay
+				></div>
+
+				<!-- Slide-down menu -->
+				<div
+          class="fixed right-4 top-4 z-1200 hidden w-[min(12rem,calc(100vw-2rem))] origin-top-right scale-95 rounded-2xl border border-gray-200 bg-white p-4 shadow-2xl opacity-0 transition-all duration-200"
+          data-mobile-menu-panel
+        >
+					<div class="mb-3 flex items-center justify-between">
+						<span class="text-base font-semibold text-busybee-700">Menu</span>
+
+						<button
+              type="button"
+              aria-label="Close menu"
+              class="inline-flex items-center justify-center rounded-md p-2 text-gray-700 transition hover:bg-gray-100 hover:text-busybee-700"
+              data-mobile-menu-close
+							>
+							<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+								<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+							</svg>
+						</button>
+					</div>
+
+					<div class="flex flex-col gap-2">
+						<%= link_to "Jobs",
+              jobs_path,
+              class: "rounded-lg px-3 py-2 text-sm font-medium #{current_page?(jobs_path) ? 'bg-busybee-50 text-busybee-700' : 'text-gray-700 hover:bg-busybee-50 hover:text-busybee-700'}",
+              data: { mobile_menu_link: true } %>
+
+						<%= link_to "Developers",
+              developers_path,
+              class: "rounded-lg px-3 py-2 text-sm font-medium #{current_page?(developers_path) ? 'bg-busybee-50 text-busybee-700' : 'text-gray-700 hover:bg-busybee-50 hover:text-busybee-700'}",
+              data: { mobile_menu_link: true } %>
+
+						<%= link_to "Clients",
+              clients_path,
+              class: "rounded-lg px-3 py-2 text-sm font-medium #{current_page?(clients_path) ? 'bg-busybee-50 text-busybee-700' : 'text-gray-700 hover:bg-busybee-50 hover:text-busybee-700'}",
+              data: { mobile_menu_link: true } %>
+
+						<% if logged_in? %>
+							<%= link_to "Profile",
+                user_path(current_user),
+                class: "rounded-lg px-3 py-2 text-sm font-medium #{current_page?(user_path(current_user)) ? 'bg-busybee-50 text-busybee-700' : 'text-gray-700 hover:bg-busybee-50 hover:text-busybee-700'}",
+                data: { mobile_menu_link: true } %>
+
+							<div class="pt-2 text-center">
+								<%= button_to "Logout",
+                    logout_path,
+                    method: :delete,
+                    form_class: "w-full",
+                    class: "w-auto rounded-lg bg-busybee-500 px-3 py-2 text-center text-sm font-medium text-white hover:bg-busybee-600 md:w-full" %>
+							</div>
+						<% else %>
+							<%= link_to "Login",
+                login_path,
+                class: "mt-2 rounded-lg bg-busybee-500 px-3 py-2 text-center text-sm font-medium text-white hover:bg-busybee-600",
+                data: { mobile_menu_link: true } %>
+						<% end %>
+					</div>
+				</div>
+
+			</div>
+		</nav>
+	<% end %>
