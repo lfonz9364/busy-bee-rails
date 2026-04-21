@@ -6,9 +6,11 @@
 					<%= @client.name.first.upcase %>
 				</div>
 
-				<div>
+				<div class="max-w-7/10">
 					<h1 class="text-2xl font-bold tracking-tight text-busybee-900"><%= @client.name %></h1>
-					<p class="mt-1 text-sm text-busybee-500"><%= @client.email %></p>
+
+					<% displayed_subtitle = @client.user.archived? ? "Archived" : @client.email %>
+					<p class="mt-1 text-sm text-busybee-500 text-clip"><%= displayed_subtitle %></p>
 				</div>
 			</div>
 
