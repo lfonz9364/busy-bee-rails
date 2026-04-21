@@ -59,7 +59,7 @@
           } %>
 
 		<%= link_to "Cancel",
-          @job.new_record? ? jobs_path : job_path(@job),
+          @job.new_record? ? my_posted_jobs_path : job_path(@job),
           class: "rounded-md border border-busybee-300 bg-white px-4 py-2 text-sm font-medium text-busybee-700 hover:bg-busybee-50" %>
 	</div>
 <% end %>
