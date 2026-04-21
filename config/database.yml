@@ -5,11 +5,11 @@ default: &default
 
 development:
   <<: *default
-  database: busy_bee_development
+  database: <%= ENV["POSTGRES_DB"] %>
 
 test:
   <<: *default
-  url: <%= ENV["DATABASE_URL"] %>
+  url: <%= ENV["POSTGRES_DB_TEST"] %>
 
 production:
   <<: *default

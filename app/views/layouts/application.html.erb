@@ -24,50 +24,9 @@
 		<!-- Readability overlay -->
 		<div class="fixed inset-0 -z-10 bg-white/75 backdrop-blur-[1px]"></div>
 
-		<% unless controller_name == "sessions" && action_name == "new" || !logged_in? %>
-			<header class="border-b border-busybee-200/80 bg-white/85 backdrop-blur">
-				<div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-					<div class="flex items-center gap-6">
-						<%= link_to root_path, class: "text-xl font-bold tracking-tight text-busybee-600" do %>
-							Busy Bee
-						<% end %>
-
-						<nav class="hidden md:flex items-center gap-4 text-sm font-medium text-busybee-700">
-							<% unless current_user.client.present? && !current_user.admin? %>
-								<%= link_to "Jobs", jobs_path, class: "hover:text-busybee-500" %>
-								<%= link_to "Clients", clients_path, class: "hover:text-busybee-500" %>
-							<% end %>
-
-							<% unless current_user.developer.present? && !current_user.admin? %>
-								<%= link_to "Posted Jobs", my_posted_jobs_path, class: "hover:text-busybee-500" %>
-								<%= link_to "Developers", developers_path, class: "hover:text-busybee-500" %>
-							<% end %>
-
-							<% if current_user.admin? %>
-								<%= link_to "Users", users_path, class: "hover:text-busybee-500" %>
-							<% end %>
-						</nav>
-					</div>
-
-					<div class="flex items-center gap-3 text-sm font-medium">
-						<% if logged_in? %>
-							<%= link_to user_path(current_user),
-                    class: "hidden sm:flex items-center gap-2 text-sm font-medium text-busybee-700 hover:text-busybee-500" do %>
-
-								<span class="flex h-8 w-8 items-center justify-center rounded-full bg-busybee-100 text-xs font-semibold text-busybee-700">
-									<%= current_user.name.first.upcase %>
-								</span>
-
-								<span><%= current_user.name %></span>
-							<% end %>
-							<%= button_to "Logout", logout_path,
-                    method: :delete,
-                    class: "rounded-md bg-busybee-500 px-4 py-2 text-white hover:bg-busybee-600" %>
-						<% end %>
-					</div>
-				</div>
-			</header>
-		<% end %>
+		<div class="mt-6">
+			<%= render "shared/navigation" %>
+		</div>
 
 		<main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
 			<% if notice %>

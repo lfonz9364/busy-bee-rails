@@ -90,4 +90,15 @@ class UserTest < ActiveSupport::TestCase
 
     assert_not user.password_reset_expired?
   end
+
+  test "archive! marks user inactive and sets deleted_at" do
+    user = create_user(email: "person@example.com")
+
+    user.archive!
+
+    assert_not user.active?
+    assert_not_nil user.deleted_at
+    assert_equal "Archived user", user.archived_label
+    assert_match(/^archived_#{user.id}_/, user.email)
+  end
 end
